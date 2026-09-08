@@ -7,7 +7,7 @@
 3. 展开 **预览提交内容**，核对网关、SSID、账号类型与后缀。
 4. 点击 **创建预设 Issue**，在 GitHub 确认并提交。内容过长时，按提示复制草稿到新 Issue。
 
-无需为此安装油猴脚本。Issue 草稿不包含账号和密码，也不会自动提交。若使用的插件版本尚无此入口，可在 [Issue](https://github.com/matthewlu070111/smart-srun/issues/new/choose) 中手动填写上述信息。
+Issue 草稿不包含账号和密码，也不会自动提交。若使用的插件版本尚无此入口，可在 [Issue](https://github.com/matthewlu070111/smart-srun/issues/new/choose) 中手动填写上述信息。
 
 保存、密码验证、实际联网是不同结果，应如实说明。记录自己实际使用的账号类型；认证页中的其他选项只能标为“页面发现”，不要推断已验证。预设草稿使用 `draft` 状态，由维护者核查后合并。
 

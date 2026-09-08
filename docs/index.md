@@ -33,5 +33,5 @@ features:
   <span class="preview-label">LuCI 界面</span>
   <h2>状态清晰，配置集中</h2>
   <p>主要状态直接可见，连接详情按需展开。</p>
-  <img src="/images/smart-srun-overview.png" alt="智慧深澜 LuCI 界面，使用示例账号与网络" width="1192" height="768" />
+  <img src="/images/smart-srun-overview.png" alt="智慧深澜 LuCI 界面，包含校园网账号与热点配置" width="1520" height="1729" />
 </div>

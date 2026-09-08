@@ -1,6 +1,6 @@
 # 文档维护与贡献者
 
-README 仅保留最简安装与使用入口；技术说明与描述性文档统一维护在 [smartsrun-doc](https://github.com/guiguisocute/smartsrun-doc) 文档仓库。`doc/default.md` 和 `doc/srun-portal-diagnostic.md` 保留为旧链接入口，Issue 模板、离线手册与 Release 模板应链接到当前文档。封面使用现行界面和示例数据，不显示真实账号或凭据。
+README 仅保留最简安装与使用入口；技术说明与描述性文档统一维护在 [smartsrun-doc](https://github.com/guiguisocute/smartsrun-doc) 文档仓库。`doc/default.md` 保留为认证策略文档入口，Issue 模板、离线手册与 Release 模板应链接到当前文档。封面使用现行界面和示例数据，不显示真实账号或凭据。
 
 配置数据仍以 `doc/school-presets.json` 为准，不因整理文档修改未知参数或提升验证状态。内部计划、一次性脚本和验收记录保存在本地 `.codex/`；历史计划不是当前功能清单，也不是版本承诺。
 
