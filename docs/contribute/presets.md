@@ -27,7 +27,7 @@ Issue 草稿不包含账号和密码，也不会自动提交。若使用的插�
 
 - `operators[].suffix` 是真实认证后缀，`label` 使用学校页面的账号类型名称；兼容读取旧 `id`，新数据写 `suffix`。
 - 已确认无后缀使用 `""`；只知道类型存在但真实后缀未确认可由维护者标记 `"??"`。向导不将未知值作为已知候选，账号归一化不会拼出 `user@??`。
-- 不新增 `defaults.operator`、`defaults.operator_suffix`、`no_suffix_operators`，也不用 `xn` 代替空后缀。
+- 不新增 `defaults.operator`、`defaults.operator_suffix`、`no_suffix_operators`；空后缀写为 `""`。真实后缀保留大小写，`xn` 仅在旧版 `operator` 字段中作为历史占位符迁移。
 - `defaults` 记录已知 `base_url / ac_id / ssid / access_mode`。未知内容保持缺失，不为补齐格式造值。
 - `observed_login_shape` 只记录真实捕获的 `n / type / enc / info_prefix / double_stack / os / name`；账号字段对应 `login_os / login_name`。
 - 保留 `source_issue`、贡献者及验证范围。历史可用数据可以保留原状态；失败样本与未确认场景不能因格式整理升级为已适配。

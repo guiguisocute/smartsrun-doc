@@ -28,7 +28,7 @@ sudo python3 scripts/test_network_namespaces.py --output-dir /tmp/smart-srun-net
 
 ## 路由器热更新
 
-`scripts/hot_update.py` 使用 Paramiko 与显式文件列表。通过环境变量设置目标：`SMARTSRUN_ROUTER_HOST`、`SMARTSRUN_ROUTER_USER`、`SMARTSRUN_ROUTER_PASSWORD`（必需）、`SMARTSRUN_LUCI_BASE_URL`（可选）。不要将实际密码写入文档或提交文件。
+`scripts/hot_update.py` 使用 Paramiko 与显式文件列表。必须设置 `SMARTSRUN_ROUTER_HOST` 和 `SMARTSRUN_ROUTER_PASSWORD`；`SMARTSRUN_ROUTER_USER` 与 `SMARTSRUN_LUCI_BASE_URL` 可选。工具没有默认目标地址。不要将实际密码写入文档或提交文件。
 
 ```sh
 python scripts/hot_update.py --dry-run
