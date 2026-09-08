@@ -7,7 +7,7 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
-  sitemap: { hostname: 'https://smartsrun-doc.pages.dev' },
+  sitemap: { hostname: 'https://srun-doc.guiguisocute.com' },
   themeConfig: {
     logo: '/logo.svg',
     nav: [

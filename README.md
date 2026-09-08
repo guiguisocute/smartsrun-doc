@@ -1,6 +1,13 @@
-# 智慧深澜文档
+<p align="center">
+  <a href="https://srun-doc.guiguisocute.com/"><img src="docs/public/logo.svg" width="96" height="96" alt="智慧深澜 Logo"></a>
+</p>
 
-[访问文档站](https://smartsrun-doc.pages.dev) · [插件仓库](https://github.com/matthewlu070111/smart-srun)
+<h1 align="center">智慧深澜文档</h1>
+
+<p align="center">
+  <a href="https://srun-doc.guiguisocute.com/"><strong>访问文档站</strong></a> ·
+  <a href="https://github.com/matthewlu070111/smart-srun">插件仓库</a>
+</p>
 
 使用指南、配置参考与开发维护文档，基于 VitePress。需要 Node.js 22 或更新版本。
 

@@ -27,12 +27,13 @@ npm run docs:preview
 | 设置 | 值 |
 | --- | --- |
 | 项目 | `smartsrun-doc` |
+| 文档域名 | `https://srun-doc.guiguisocute.com/` |
 | 生产分支 | `main` |
 | 构建命令 | `npm run docs:build` |
 | 输出目录 | `docs/.vitepress/dist` |
 | Node.js | `22` |
 
-Cloudflare 的 GitHub 集成负责生产与预览部署；GitHub Actions 负责 PR 的构建检查。Pages API 令牌不存入仓库，日常改文档无需分发令牌。设置方式参见 [Cloudflare VitePress 部署指南](https://developers.cloudflare.com/pages/framework-guides/deploy-a-vitepress-site/)。
+Cloudflare 的 GitHub 集成负责生产与预览部署；GitHub Actions 负责 PR 的构建检查。自定义域名在 Pages 项目中绑定，DNS 使用指向 `smartsrun-doc.pages.dev` 的 CNAME；站点地图和对外文档链接统一使用 `https://srun-doc.guiguisocute.com/`。Pages API 令牌不存入仓库，日常改文档无需分发令牌。设置方式参见 [Cloudflare VitePress 部署指南](https://developers.cloudflare.com/pages/framework-guides/deploy-a-vitepress-site/)。
 
 ## 更新约定
 
