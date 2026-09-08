@@ -1,0 +1,26 @@
+:root {
+  --vp-c-brand-1: #157958;
+  --vp-c-brand-2: #198b65;
+  --vp-c-brand-3: #147553;
+  --vp-c-brand-soft: rgba(21, 121, 88, .10);
+  --vp-home-hero-name-color: #157958;
+  --vp-font-family-base: "Inter", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+.dark {
+  --vp-c-brand-1: #73dcb2;
+  --vp-c-brand-2: #54cba0;
+  --vp-c-brand-3: #267f61;
+  --vp-c-brand-soft: rgba(84, 203, 160, .12);
+  --vp-home-hero-name-color: #73dcb2;
+}
+.VPHomeHero .image-bg { background: none; }
+.VPHomeHero .image-src { max-width: 220px; max-height: 220px; }
+.vp-doc { line-height: 1.85; }
+.vp-doc h2 { letter-spacing: -.02em; }
+.vp-doc img { border-radius: 12px; border: 1px solid var(--vp-c-divider); }
+.home-preview { max-width: 1152px; margin: 72px auto; padding: 0 24px; }
+.preview-label { color: var(--vp-c-brand-1); font-weight: 600; font-size: 13px; letter-spacing: .06em; }
+.home-preview h2 { font-size: 28px; font-weight: 650; line-height: 1.5; margin-top: 8px; }
+.home-preview p { color: var(--vp-c-text-2); margin: 12px 0 24px; }
+.home-preview img { display: block; width: 100%; height: auto; border: 1px solid var(--vp-c-divider); border-radius: 16px; box-shadow: 0 12px 36px #0000000a; }
+@media (max-width: 640px) { .home-preview { margin: 40px auto; } .home-preview h2 { font-size: 24px; } }
