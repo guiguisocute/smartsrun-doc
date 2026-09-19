@@ -8,7 +8,7 @@ import DownloadSelector from '../.vitepress/theme/DownloadSelector.vue'
 
 # 下载与版本选择
 
-先查看设备实际使用的包管理器和包架构，再选择安装组合。第三方固件的版本名称、路由器型号和浏览器信息不能代替这些查询结果。
+搜索并选择路由器型号，再选当前固件，即可匹配安装包。型号目录来自 OpenWrt 官方设备数据，包含硬件版本差异；使用第三方固件或找不到型号时，可通过设备查询补充匹配信息。
 
 本页选择器面向带有发布清单的 **Go 2.0**。已有 1.x 版本请到[官方 Releases](https://github.com/matthewlu070111/smart-srun/releases)查看版本说明，并参照[1.x 安装指引](/guide/install)。
 
