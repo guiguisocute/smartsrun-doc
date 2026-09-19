@@ -20,6 +20,8 @@ export default defineConfig({
       { text: '使用指南', items: [
         { text: '快速开始', link: '/guide/getting-started' },
         { text: '安装与兼容性', link: '/guide/install' },
+        { text: '下载与版本选择', link: '/guide/download' },
+        { text: '学校预设', link: '/guide/schools' },
         { text: '一键配置', link: '/guide/setup-wizard' },
         { text: '认证策略与后缀', link: '/guide/authentication' },
         { text: '账号、无线与多 WAN', link: '/guide/accounts' },
