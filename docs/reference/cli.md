@@ -1,5 +1,7 @@
 # 命令行参考
 
+1.6.1 和 Go 2.0 的 `config export` / `config import --check` 用法见[配置备份](/guide/backup-migration#命令行)。
+
 安装后执行 `srunnet help` 查看当前版本支持的命令；`srunnet help config` 查看子命令，`srunnet man` 查看离线手册。无参数等同 `srunnet status`。
 
 ```sh
