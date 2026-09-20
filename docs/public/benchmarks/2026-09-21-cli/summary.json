@@ -1,0 +1,309 @@
+{
+  "metadata": {
+    "python": {
+      "source": "3829f52e39f23906c66eda9db70d02cbf41ac4a4",
+      "version": "1.6.1",
+      "package_sha256": "a1fb4a6a976e01b1b2790cf6d37331c09b978ff7d111be59fcb1651967d2ca83",
+      "native_trusted_verification": false,
+      "memory_mib": 128,
+      "cpus": 1,
+      "automatic_authentication": false,
+      "all_installed_regular_files_verified": 32
+    },
+    "go": {
+      "source": "6db20d95a31bf9c1f816e0bb01de56cee29f026f",
+      "version": "2.0.0rc1",
+      "package_sha256": "2d4bb0786da533c184225dd240a9e3f531d78273f28e330cf89f3e3accfba4f4",
+      "native_trusted_verification": true,
+      "memory_mib": 128,
+      "cpus": 1,
+      "automatic_authentication": false,
+      "all_installed_regular_files_verified": 15,
+      "running_executable_verified": true
+    }
+  },
+  "commands": {
+    "help": {
+      "python": [
+        "srunnet",
+        "help"
+      ],
+      "go": [
+        "srunnet",
+        "help"
+      ]
+    },
+    "version": {
+      "python": [
+        "srunnet",
+        "--version"
+      ],
+      "go": [
+        "srunnet",
+        "version"
+      ]
+    },
+    "config": {
+      "python": [
+        "srunnet",
+        "config",
+        "show"
+      ],
+      "go": [
+        "srunnet",
+        "config",
+        "show"
+      ]
+    },
+    "accounts": {
+      "python": [
+        "srunnet",
+        "config",
+        "account"
+      ],
+      "go": [
+        "srunnet",
+        "config",
+        "account",
+        "list"
+      ]
+    },
+    "schools": {
+      "python": [
+        "srunnet",
+        "schools"
+      ],
+      "go": [
+        "srunnet",
+        "schools",
+        "list",
+        "--json"
+      ]
+    },
+    "status": {
+      "python": [
+        "srunnet",
+        "status"
+      ],
+      "go": [
+        "srunnet",
+        "status"
+      ]
+    },
+    "export": {
+      "python": [
+        "srunnet",
+        "config",
+        "export",
+        "-"
+      ],
+      "go": [
+        "srunnet",
+        "config",
+        "export",
+        "-"
+      ]
+    },
+    "timer_floor": {
+      "python": [
+        "/bin/true"
+      ],
+      "go": [
+        "/bin/true"
+      ]
+    }
+  },
+  "measurements": {
+    "help": {
+      "python": {
+        "n": 60,
+        "median_ms": 4383.527421000001,
+        "p95_ms": 6746.90206,
+        "mean_ms": 4650.7992827,
+        "serial_ops_per_second": 0.21501680447053279
+      },
+      "go": {
+        "n": 60,
+        "median_ms": 31.269954499999997,
+        "p95_ms": 49.349338,
+        "mean_ms": 35.98341013333334,
+        "serial_ops_per_second": 27.79058450254127
+      },
+      "median_speedup": 140.1833642258738
+    },
+    "version": {
+      "python": {
+        "n": 60,
+        "median_ms": 4508.010412,
+        "p95_ms": 6029.346564,
+        "mean_ms": 4581.933499683333,
+        "serial_ops_per_second": 0.21824847524939245
+      },
+      "go": {
+        "n": 60,
+        "median_ms": 30.1771955,
+        "p95_ms": 45.763516,
+        "mean_ms": 32.15431645,
+        "serial_ops_per_second": 31.100023586413386
+      },
+      "median_speedup": 149.3846706861809
+    },
+    "config": {
+      "python": {
+        "n": 60,
+        "median_ms": 4366.3160179999995,
+        "p95_ms": 6016.134727,
+        "mean_ms": 4418.872819666667,
+        "serial_ops_per_second": 0.22630205502846626
+      },
+      "go": {
+        "n": 60,
+        "median_ms": 36.8730675,
+        "p95_ms": 45.998094,
+        "mean_ms": 38.47387341666666,
+        "serial_ops_per_second": 25.991664243684017
+      },
+      "median_speedup": 118.41477571672061
+    },
+    "accounts": {
+      "python": {
+        "n": 60,
+        "median_ms": 4473.0311375,
+        "p95_ms": 5875.930675,
+        "mean_ms": 4655.0702121,
+        "serial_ops_per_second": 0.21481953105684284
+      },
+      "go": {
+        "n": 60,
+        "median_ms": 37.226387,
+        "p95_ms": 50.629602,
+        "mean_ms": 38.003815083333336,
+        "serial_ops_per_second": 26.31314771443966
+      },
+      "median_speedup": 120.1575414100756
+    },
+    "schools": {
+      "python": {
+        "n": 60,
+        "median_ms": 4646.861838000001,
+        "p95_ms": 6022.29211,
+        "mean_ms": 4787.313404266667,
+        "serial_ops_per_second": 0.20888542603221996
+      },
+      "go": {
+        "n": 60,
+        "median_ms": 33.902564,
+        "p95_ms": 49.100222,
+        "mean_ms": 36.674795366666665,
+        "serial_ops_per_second": 27.2666824723142
+      },
+      "median_speedup": 137.06520362294725
+    },
+    "status": {
+      "python": {
+        "n": 60,
+        "median_ms": 4778.418832,
+        "p95_ms": 6464.949285,
+        "mean_ms": 5006.244111,
+        "serial_ops_per_second": 0.19975054708234144
+      },
+      "go": {
+        "n": 60,
+        "median_ms": 36.789596,
+        "p95_ms": 61.166859,
+        "mean_ms": 41.595913233333334,
+        "serial_ops_per_second": 24.040823298925414
+      },
+      "median_speedup": 129.88505859102122
+    },
+    "export": {
+      "python": {
+        "n": 60,
+        "median_ms": 4909.43396,
+        "p95_ms": 7140.738335,
+        "mean_ms": 5105.739457166666,
+        "serial_ops_per_second": 0.19585801594249996
+      },
+      "go": {
+        "n": 60,
+        "median_ms": 37.081599499999996,
+        "p95_ms": 56.219233,
+        "mean_ms": 40.1207247,
+        "serial_ops_per_second": 24.924774103095903
+      },
+      "median_speedup": 132.39542053734766
+    },
+    "timer_floor": {
+      "python": {
+        "n": 60,
+        "median_ms": 3.156186,
+        "p95_ms": 3.711999,
+        "mean_ms": 3.2644668,
+        "serial_ops_per_second": 306.3287395050242
+      },
+      "go": {
+        "n": 60,
+        "median_ms": 3.1858139999999997,
+        "p95_ms": 5.473113,
+        "mean_ms": 3.6161909,
+        "serial_ops_per_second": 276.53407346387604
+      },
+      "median_speedup": 0.9907000220351848
+    },
+    "luci_status": {
+      "python": {
+        "n": 60,
+        "median_ms": 209.6960455,
+        "p95_ms": 312.432409,
+        "mean_ms": 230.73687338333335,
+        "serial_ops_per_second": 4.333941018341944
+      },
+      "go": {
+        "n": 60,
+        "median_ms": 222.9610165,
+        "p95_ms": 357.82765,
+        "mean_ms": 243.61728746666668,
+        "serial_ops_per_second": 4.104799008308581
+      },
+      "median_speedup": 0.9405054246332789
+    },
+    "rpc_status.get": {
+      "go": {
+        "n": 60,
+        "median_ms": 2.032177,
+        "p95_ms": 3.473319,
+        "mean_ms": 2.3313416166666667,
+        "serial_ops_per_second": 428.9375666144509
+      }
+    },
+    "rpc_config.get": {
+      "go": {
+        "n": 60,
+        "median_ms": 2.4872069999999997,
+        "p95_ms": 3.749528,
+        "mean_ms": 2.5281186,
+        "serial_ops_per_second": 395.551063150281
+      }
+    }
+  },
+  "synthetic_portal_requests": {
+    "identity": 107,
+    "other": 0
+  },
+  "samples_sha256": "13f6b022f3631720112c659d0ff4bc45f7aac90f89a500db3c7c1541e271951d",
+  "scope": "Warm repeated commands, one synthetic wired account, auth disabled, host-local deterministic offline portal. Python status actively checks portal; Go status reads cached daemon state. HTTP includes uhttpd/LuCI; direct Go RPC has no equivalent legacy daemon endpoint. TCG 1CPU128MiB official25.12.2 shared base; no physical gaming/login/switch/Internet throughput claim.",
+  "config_unchanged": true,
+  "completed_at": 1789928296.6149876,
+  "environment": {
+    "qemu": "QEMU emulator version 10.0.13 (Debian 1:10.0.13+ds-0+deb13u1)",
+    "host_cpu_model": "Intel(R) Xeon(R) Processor",
+    "host_logical_cpus": 8,
+    "host_kernel": "6.12.94+ x86_64",
+    "guest_firmware": "OpenWrt25.12.2x86_64",
+    "guest_memory_mib": 128,
+    "guest_cpus": 1,
+    "clock": "CLOCK_MONOTONIC",
+    "virtualization": "TCG",
+    "host_exclusive": false
+  }
+}

@@ -29,7 +29,7 @@ features:
     linkText: 开发维护
 ---
 
-Go 2.0 提供按路由器型号选包、1.6.1 配置导入和每日学校预设更新。候选版本的资源改进与测量边界见 [Go 资源基准](/development/benchmarks)，发布状态以 [Releases](https://github.com/matthewlu070111/smart-srun/releases) 为准。
+Go 2.0 提供按路由器型号选包、1.6.1 配置导入和每日学校预设更新。候选版本的命令耗时、资源改进与测量边界见 [Go 性能基准](/development/benchmarks)，发布状态以 [Releases](https://github.com/matthewlu070111/smart-srun/releases) 为准。
 
 <div class="home-preview">
   <span class="preview-label">LuCI 界面</span>
