@@ -1,2 +1,6 @@
 # Keep the recorded upstream catalogue checksum stable on Windows checkouts.
 data/school-presets.json text eol=lf
+
+docs/public/benchmarks/**/*.json text eol=lf
+docs/public/benchmarks/**/*.txt text eol=lf
+docs/public/benchmarks/**/*.zip binary
