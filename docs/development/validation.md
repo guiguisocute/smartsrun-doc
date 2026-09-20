@@ -1,6 +1,29 @@
 # 测试、热更新与发布
 
-## 本地检查
+## Go 2.0 开发分支
+
+Go 树与 1.x 的构建、设备运行时和热更新方式不同。以下流程适用于 Go 开发分支，不能把开发包的构建成功视为正式发布或设备验收通过。
+
+```sh
+scripts/verify-go.sh
+```
+
+门禁执行格式、vet、乱序测试、覆盖率和竞态检查。按功能批次推进时，先做构建、相关回归与危险副作用检查；独立审查、设备负载、真实无线/校园与长期稳定性仍需在发布前完成。
+
+SDK 输入由 `targets.json` 固定，`scripts/build_go_sdk.py` 构建实际架构包，`scripts/verify_go_sdk.py` 核验原生签名、ELF/ABI 和完整安装载荷。构建、版本命令运行、安装、完整测试和真实设备验收分别记录，下载页按已提供的证据显示状态。
+
+Go 树的 `scripts/hot_update.py` 使用开发主机上的 Python 与 OpenSSH，上传实际 SDK 包及当前精确版本的恢复包，由设备上的独立更新进程安装。设备必须已支持 `srunnet update inventory`；首次安装使用原生包管理器。设备不需要 Python，也不接收旧 Python 运行时的文件覆盖。
+
+```sh
+python3 scripts/hot_update.py --host router \
+  --manifest new/release-manifest.json --assets new \
+  --recovery-manifest old/release-manifest.json --recovery-assets old \
+  --probe
+```
+
+`--dry-run` 校验本地文件；`--probe` 仅读取设备环境；`--prepare` 上传并完成设备端核验但不安装。去掉这些参数才执行更新。APK 必须通过设备信任密钥的原生验证，不使用安装信任绕过。实验签名包不能直接作为公共发布包。
+
+## 1.x 本地检查
 
 开发环境安装 Python、Node.js 与 Lua 5.1；Python 工具版本应与 [CI](https://github.com/matthewlu070111/smart-srun/blob/main/.github/workflows/ci.yml) 保持一致：
 
@@ -26,7 +49,7 @@ sudo python3 scripts/test_network_namespaces.py --output-dir /tmp/smart-srun-net
 
 该脚本创建并清理自己的 namespace / veth，验证绑定、相同 IP、DHCP 换址、断线和 DNS，不替代真实校园网与无线测试。
 
-## 路由器热更新
+## 1.x 路由器热更新
 
 `scripts/hot_update.py` 使用 Paramiko 与显式文件列表。必须设置 `SMARTSRUN_ROUTER_HOST` 和 `SMARTSRUN_ROUTER_PASSWORD`；`SMARTSRUN_ROUTER_USER` 与 `SMARTSRUN_LUCI_BASE_URL` 可选。工具没有默认目标地址。不要将实际密码写入文档或提交文件。
 
@@ -38,7 +61,7 @@ python scripts/hot_update.py
 
 `--dry-run` 只展示计划；`--probe` 上传到临时目录做远端语法/import 检查；无参数会覆盖生产文件、清理缓存并重启相关服务。目标与凭据应事先配置，生产操作前保存备份。新增随包文件必须更新显式上传列表。
 
-## 构建与发布
+## 1.x 构建与发布
 
 | 工作流 | 作用 |
 | --- | --- |
