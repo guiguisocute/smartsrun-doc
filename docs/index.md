@@ -12,6 +12,9 @@ hero:
       text: 快速开始
       link: /guide/getting-started
     - theme: alt
+      text: 下载与版本选择
+      link: /guide/download
+    - theme: alt
       text: 贡献学校预设
       link: /contribute/presets
 features:
@@ -29,7 +32,7 @@ features:
     linkText: 开发维护
 ---
 
-Go 2.0 提供按路由器型号选包、1.6.1 配置导入和每日学校预设更新。候选版本的命令耗时、资源改进与测量边界见 [Go 性能基准](/development/benchmarks)，发布状态以 [Releases](https://github.com/matthewlu070111/smart-srun/releases) 为准。
+Go 2.0.0rc1 候选版已公开，可在[下载与版本选择](/guide/download)按路由器型号选包；它提供 1.6.1 配置导入和每日学校预设更新。候选版本的命令耗时、资源改进与测量边界见 [Go 性能基准](/development/benchmarks)，发布状态以 [Releases](https://github.com/matthewlu070111/smart-srun/releases) 为准。
 
 <div class="home-preview">
   <span class="preview-label">LuCI 界面</span>

@@ -4,6 +4,8 @@ export const VALIDATION = { build: '构建', elf: 'ELF 检查', emulated_core: '
 const name = /^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}$/
 const hash = /^[a-f0-9]{64}$/
 const family = /^\d{2}\.\d{2}$/
+// Mirrors internal/update MaxPayloadBytes, raised from 10 MiB in 2.0.0rc1.
+const MAX_PAYLOAD = 16 * 1024**2
 const required = (value, keys) => value && typeof value === 'object' && !Array.isArray(value) &&
   Object.keys(value).length === keys.length && keys.every(key => Object.hasOwn(value, key))
 
@@ -43,7 +45,7 @@ export function validateManifest(manifest) {
         !['core','luci','bundle'].includes(asset.kind) || !['opkg:ipk','apk:apk'].includes(asset.package_manager + ':' + asset.format) ||
         asset.goos !== 'linux' || !/^\d{2}\.\d{2}\.\d+$/.test(asset.sdk_release) || !/^[a-z0-9_-]+\/[a-z0-9_-]+$/.test(asset.target) ||
         !hash.test(asset.sha256) || !Number.isSafeInteger(asset.bytes) || asset.bytes <= 0 || asset.bytes > 16 * 1024**2 ||
-        !Number.isSafeInteger(asset.installed_bytes) || asset.installed_bytes <= 0 || asset.installed_bytes > 10 * 1024**2 ||
+        !Number.isSafeInteger(asset.installed_bytes) || asset.installed_bytes <= 0 || asset.installed_bytes > MAX_PAYLOAD ||
         !Array.isArray(asset.firmware_compat) || !asset.firmware_compat.length || asset.firmware_compat.length > 8 ||
         asset.firmware_compat.some(value => !family.test(value)) || new Set(asset.firmware_compat).size !== asset.firmware_compat.length ||
         !required(asset.validation, Object.keys(VALIDATION)) || Object.values(asset.validation).some(value => typeof value !== 'boolean')) throw Error('发布资产元数据无效')
@@ -98,7 +100,11 @@ export function selectAssets(manifest, facts = {}, mode = 'bundle') {
     asset.firmware_compat.includes(facts.firmwareFamily) && asset.validation.build && (asset.kind === 'luci' || asset.validation.elf))
   const coreKind = mode === 'bundle' ? 'bundle' : 'core'
   const candidates = compatible.filter(asset => asset.kind === coreKind && priorities.has(asset.openwrt_arch))
-  if (!candidates.length) return { type: 'Unsupported', message: '此版本没有经过基本验证、适合该设备的安装包。' }
+  if (!candidates.length) {
+    // reason lets the page point at the right workaround without guessing a link.
+    if (compatible.some(asset => asset.kind === coreKind)) return { type: 'Unsupported', reason: 'architecture', message: '此版本没有该包架构、经过基本验证的安装包。' }
+    return { type: 'Unsupported', reason: 'firmware', message: `此版本没有为 ${facts.firmwareFamily} 固件登记经过基本验证的 ${facts.packageManager} 安装包。` }
+  }
   const priority = Math.max(...candidates.map(asset => priorities.get(asset.openwrt_arch)))
   const best = candidates.filter(asset => priorities.get(asset.openwrt_arch) === priority)
   if (best.length !== 1) return { type: 'Ambiguous', message: '存在多个同优先级安装包，无法自动选择。' }
@@ -111,6 +117,22 @@ export function selectAssets(manifest, facts = {}, mode = 'bundle') {
     installedBytes += luci[0].installed_bytes
     assets = mode === 'luci' ? luci : [best[0], ...luci]
   }
-  if (installedBytes > 10 * 1024**2) return { type: 'Unsupported', message: '安装组合超过当前载荷上限。' }
+  if (installedBytes > MAX_PAYLOAD) return { type: 'Unsupported', message: '安装组合超过当前载荷上限。' }
   return { type: 'Match', assets, release: manifest.release, mode }
+}
+
+// What one release offers for an install mode, grouped by package manager and
+// firmware family, using the same basic-validation filter as selectAssets.
+export function releaseCoverage(manifest, mode = 'bundle') {
+  const kind = mode === 'bundle' ? 'bundle' : 'core', groups = new Map()
+  for (const asset of manifest.assets) {
+    if (asset.kind !== kind || !asset.validation.build || !asset.validation.elf) continue
+    for (const firmware of asset.firmware_compat) {
+      const key = asset.package_manager + '/' + firmware
+      if (!groups.has(key)) groups.set(key, { packageManager: asset.package_manager, firmware, architectures: [] })
+      groups.get(key).architectures.push(asset.openwrt_arch)
+    }
+  }
+  return [...groups.values()].map(group => ({ ...group, architectures: group.architectures.sort() }))
+    .sort((a,b) => b.firmware.localeCompare(a.firmware, 'en', { numeric: true }) || a.packageManager.localeCompare(b.packageManager))
 }
