@@ -2,8 +2,15 @@
 import { computed, ref, watch } from 'vue'
 import { data } from '../../guide/releases.data.js'
 import { data as devices } from '../../guide/devices.data.js'
-import { VALIDATION, assetFilename, channelReleases, parseDeviceFacts, selectAssets } from '../../../scripts/releases.mjs'
+import { REPOSITORY, VALIDATION, assetFilename, channelReleases, parseDeviceFacts, releaseCoverage, selectAssets } from '../../../scripts/releases.mjs'
 import { deviceLabel, searchDevices, deviceFirmware, factsForDevice } from '../../../scripts/devices.mjs'
+
+const MODE_HELP = {
+  bundle: '一个文件，包含核心、srunnet 命令行和 LuCI 页面。第一次安装选这个。',
+  core: '只安装后台服务和 srunnet 命令行，没有 LuCI 页面。',
+  split: '核心与同版本 LuCI 两个文件，先装核心。与 bundle 互斥，不要混装。',
+  luci: '已安装同版本核心时补装 LuCI 页面。'
+}
 
 const channel = ref('stable'), version = ref(''), manager = ref(''), firmware = ref(''), architectures = ref(''), mode = ref('bundle'), coreVersion = ref('')
 const pasted = ref(''), notice = ref('')
@@ -13,8 +20,12 @@ const selectedDevice = computed(() => devices.devices.find(item => item.id === d
 const firmwareOptions = computed(() => deviceFirmware(devices, deviceID.value).slice().sort((a,b) => b.release.localeCompare(a.release, 'en', {numeric:true})))
 const selectedSource = computed(() => firmwareOptions.value.find(item => item.id === firmwareChoice.value))
 const releases = computed(() => channelReleases(data.releases.map(item => item.manifest), channel.value))
+const candidates = computed(() => channelReleases(data.releases.map(item => item.manifest), 'rc'))
+const onlyCandidates = computed(() => channel.value === 'stable' && !releases.value.length && candidates.value.length > 0)
 const manifest = computed(() => releases.value.find(item => item.release === version.value) || null)
-watch(channel, () => { version.value = ''; notice.value = '' })
+// The RC list includes stable releases, so a switch keeps a version both lists offer.
+watch(channel, () => { if (!manifest.value) version.value = ''; notice.value = '' })
+function useCandidate() { channel.value = 'rc'; version.value = candidates.value[0].release }
 watch(version, () => { notice.value = '' })
 const actualFacts = computed(() => ({ packageManager: manager.value, firmwareFamily: firmware.value,
   architectures: architectures.value.split(/\r?\n/).filter(line => line.trim()).map(line => {
@@ -32,9 +43,17 @@ function chooseFirmware() {
   manager.value = ''; firmware.value = ''; architectures.value = ''; pasted.value = ''; notice.value = ''
 }
 const result = computed(() => {
+  if (onlyCandidates.value) return { type: 'NeedMoreInfo', message: 'Go 2.0 暂无稳定版。请在第 2 步改选「候选版」，或继续使用 1.6.1 稳定版。' }
   if (!manifest.value) return { type: 'NeedMoreInfo', message: releases.value.length ? '请选择固定发布版本。' : '当前快照没有收录此通道的 Go 2.0 安装包。' }
   if (!useActual.value && !selectedSource.value) return { type:'NeedMoreInfo', message:'请选择路由器型号和当前固件。' }
   return selectAssets(manifest.value, facts.value, mode.value)
+})
+const coverage = computed(() => manifest.value ? releaseCoverage(manifest.value, mode.value) : [])
+const managerFamilies = computed(() => coverage.value.filter(group => group.packageManager === facts.value.packageManager).map(group => group.firmware))
+const versionExample = computed(() => {
+  const example = manager => manifest.value?.assets.find(asset => asset.package_manager === manager)?.package_version
+  const values = ['opkg', 'apk'].filter(example).map(manager => `${example(manager)}（${manager}）`)
+  return values.length ? '例如：' + values.join(' 或 ') : '从包管理器读取的完整版本'
 })
 function importFacts() {
   if (!manager.value) { notice.value = '请先选择设备实际使用的包管理器。'; return }
@@ -99,18 +118,29 @@ command -v apk &amp;&amp; apk --print-arch</code></pre>
       <legend>2. 选择发布版本</legend>
       <label for="release-channel">发布通道</label>
       <select id="release-channel" v-model="channel"><option value="stable">稳定版</option><option value="rc">候选版（RC，含正式版）</option></select>
-      <p v-if="channel === 'rc'">Go 2.0 是有破坏性变更的重写版本，需要重新配置账号；1.x 配置不会自动导入。</p>
+      <p v-if="onlyCandidates" class="channel-hint">Go 2.0 暂无稳定版，目前公开的是候选版 {{ candidates[0].release }}。<button type="button" @click="useCandidate">改用候选版 {{ candidates[0].release }}</button> 需要稳定版请按 <a href="/guide/install">1.x 安装指引</a> 安装 1.6.1。</p>
+      <p v-if="channel === 'rc'">候选版是预发布版本，适合愿意测试新版本的用户。Go 2.0 不会自动读取 1.x 配置：升级前在 1.6.1 导出备份，安装后<a href="/guide/backup-migration">显式导入</a>，或重新填写账号。</p>
       <label for="release-version">固定版本</label>
       <select id="release-version" v-model="version"><option value="">{{ releases.length ? '请选择版本' : '此通道暂无已收录版本' }}</option><option v-for="release in releases" :key="release.release" :value="release.release">{{ release.release }}</option></select>
+      <p v-if="manifest"><a :href="`https://github.com/${REPOSITORY}/releases/tag/${manifest.release}`">{{ manifest.release }} 发布说明</a>{{ manifest.channel === 'rc' ? '（预发布）' : '' }}：包含变更、升级步骤和已知限制。</p>
     </fieldset>
     <fieldset>
       <legend>3. 选择安装方式</legend>
       <label for="install-mode">安装方式</label>
       <select id="install-mode" v-model="mode"><option value="bundle">完整包（bundle，推荐）</option><option value="core">仅核心与 CLI</option><option value="split">核心 + LuCI 分体包</option><option value="luci">已有同版本核心，仅加装 LuCI</option></select>
-      <template v-if="mode === 'luci'"><label for="installed-core-version">已安装核心的精确包版本</label><input id="installed-core-version" v-model="coreVersion" placeholder="从包管理器读取的完整版本" maxlength="80" /></template>
+      <p class="snapshot-note">{{ MODE_HELP[mode] }}</p>
+      <template v-if="mode === 'luci'">
+        <label for="installed-core-version">已安装核心的精确包版本</label>
+        <input id="installed-core-version" v-model="coreVersion" :placeholder="versionExample" maxlength="80" />
+        <p class="snapshot-note">通过 SSH 执行 <code>opkg list-installed smart-srun</code> 或 <code>apk list --installed smart-srun</code> 查看。</p>
+      </template>
     </fieldset>
     <div aria-live="polite" class="download-result">
-      <p v-if="result.type !== 'Match'">{{ result.message }}</p>
+      <template v-if="result.type !== 'Match'">
+        <p>{{ result.message }}</p>
+        <p v-if="result.reason === 'firmware' && managerFamilies.length">此版本的 {{ facts.packageManager }} 安装包只登记了 {{ managerFamilies.join('、') }} 固件系列。<template v-if="facts.packageManager === 'opkg'">固件版本较新但仍使用 opkg 时，参见 <a href="/guide/download#_25-12-固件仍使用-opkg">25.12 固件仍使用 opkg</a>。</template></p>
+        <p v-else-if="result.reason">请对照下方「此版本提供的架构」核对设备信息。设备不在列表中时，暂时无法安装此版本，参见 <a href="/guide/download#没有匹配的安装包">没有匹配的安装包</a>。</p>
+      </template>
       <template v-else>
         <h2>适合此设备的 {{ result.release }} 安装包</h2>
         <p v-if="mode === 'split'">同时下载两个文件，先安装核心，再安装同版本 LuCI。</p>
@@ -123,8 +153,12 @@ command -v apk &amp;&amp; apk --print-arch</code></pre>
           <p class="checksum"><strong>SHA256</strong><br /><code>{{ asset.sha256 }}</code></p>
           <div class="asset-actions"><a :href="asset.url">下载此安装包</a><button type="button" @click="copyHash(asset.sha256)">复制 SHA256</button></div>
         </article>
-        <p><a :href="`https://github.com/matthewlu070111/smart-srun/releases/download/${result.release}/SHA256SUMS`">下载校验和清单</a> · <a href="/guide/download#安装与校验">安装与校验说明</a></p>
+        <p><a :href="`https://github.com/${REPOSITORY}/releases/download/${result.release}/SHA256SUMS`">下载校验和清单</a> · <a href="/guide/download#安装与校验">安装与校验说明</a></p>
       </template>
+      <details v-if="coverage.length" :open="result.type === 'Unsupported'">
+        <summary>此版本提供的架构（{{ mode === 'bundle' ? '完整包' : '核心包' }}）</summary>
+        <ul class="coverage"><li v-for="group in coverage" :key="group.packageManager + group.firmware"><strong>{{ group.firmware }} 固件 · {{ group.packageManager }}（{{ group.packageManager === 'opkg' ? 'IPK' : 'APK' }}）</strong>：<template v-for="(arch, index) in group.architectures" :key="arch"><code>{{ arch }}</code>{{ index < group.architectures.length - 1 ? '、' : '' }}</template></li></ul>
+      </details>
     </div>
     <p role="status" class="input-notice">{{ notice }}</p>
   </div>
@@ -151,4 +185,6 @@ pre { overflow: auto; font-size: .85rem; }
 .asset-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
 .checksum code { white-space: normal; word-break: break-all; }
 .input-notice { min-height: 1.8rem; }
+.channel-hint button { margin: 0 .3rem; }
+.coverage { padding-left: 1.2rem; }
 </style>

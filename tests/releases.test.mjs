@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto'
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { validateManifest, selectAssets, parseDeviceFacts, compareVersions, channelReleases, assetFilename } from '../scripts/releases.mjs'
+import { validateManifest, selectAssets, parseDeviceFacts, compareVersions, channelReleases, assetFilename, releaseCoverage } from '../scripts/releases.mjs'
 import { parseStrictJSON } from '../scripts/strict-json.mjs'
 import { publicRelease, refreshReleases } from '../scripts/sync-releases.mjs'
 import { manifestFixture, factsFixture } from './release-fixtures.mjs'
@@ -54,7 +54,7 @@ test('malicious metadata, unvalidated targets and oversized combinations are rej
     m=>m.assets[0].validation.elf='true',m=>m.assets[0].url=m.assets[0].url.replace('/smart-srun_', '/unrelated_')]) {
     const manifest=manifestFixture();mutation(manifest);assert.throws(()=>validateManifest(manifest))
   }
-  const manifest=manifestFixture();manifest.assets[0].installed_bytes=10*1024**2
+  const manifest=manifestFixture();manifest.assets[0].installed_bytes=16*1024**2
   assert.equal(selectAssets(manifest,factsFixture(),'split').type,'Unsupported')
   assert.equal(selectAssets(manifest,{...factsFixture(),coreVersion:manifest.assets[0].package_version},'luci').type,'Unsupported')
   manifest.assets.find(a=>a.kind==='bundle').validation.elf=false
@@ -62,6 +62,26 @@ test('malicious metadata, unvalidated targets and oversized combinations are rej
   assert.throws(()=>parseStrictJSON('{"schema_version":1,"schema_version":2}'),/重复/)
   assert.throws(()=>parseStrictJSON('{"a":[{"x":1,"\\u0078":2}]}'),/重复/)
   assert.deepEqual(parseStrictJSON('{"a":["escaped\\\"value",{},true,null,12]}'),{a:['escaped"value',{},true,null,12]})
+})
+
+test('payload limit follows the 16 MiB updater contract', () => {
+  const manifest=manifestFixture();manifest.assets.find(a=>a.kind==='bundle').installed_bytes=12*1024**2
+  assert.equal(selectAssets(manifest,factsFixture()).type,'Match')
+  manifest.assets[0].installed_bytes=16*1024**2+1
+  assert.throws(()=>validateManifest(manifest))
+})
+
+test('unsupported results say whether firmware or architecture is missing', () => {
+  const manifest=manifestFixture()
+  assert.equal(selectAssets(manifest,factsFixture('opkg','mipsel_24kc')).reason,'architecture')
+  assert.equal(selectAssets(manifest,factsFixture('opkg','mips_24kc','23.05')).reason,'firmware')
+  assert.equal(selectAssets(manifest,factsFixture('apk')).reason,'firmware')
+  assert.deepEqual(releaseCoverage(manifest),[
+    {packageManager:'opkg',firmware:'25.12',architectures:['mips_24kc']},
+    {packageManager:'opkg',firmware:'24.10',architectures:['mips_24kc']}])
+  manifest.assets.find(a=>a.kind==='bundle').validation.elf=false
+  assert.deepEqual(releaseCoverage(manifest),[])
+  assert.equal(releaseCoverage(manifest,'split').length,2)
 })
 
 test('pasted diagnostics retain package facts only, without inferring firmware manager', () => {
