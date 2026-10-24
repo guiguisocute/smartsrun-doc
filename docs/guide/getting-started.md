@@ -4,10 +4,10 @@
 
 ## 安装
 
-先选版本：**1.6.1** 是当前稳定版；**Go 2.0.0rc1** 是候选版，安装包按 CPU 架构区分。两者的区别与选择建议见[下载与版本选择](/guide/download#先选版本)。
+先在[下载与版本选择](/guide/download#先选版本)核对发布状态与适用范围，再按路由器实际架构、固件和包管理器选包。
 
-- **1.6.1**：从 [Releases](https://github.com/matthewlu070111/smart-srun/releases) 下载 `luci-app-smart-srun-bundle`，按设备包管理器选择 `.ipk`（opkg）或 `.apk`（apk）。安装条件及 SSH 命令见[安装指南](/guide/install)。
-- **Go 2.0**：在[下载与版本选择](/guide/download)中按路由器型号和固件匹配安装包。从 1.6.1 升级前先[导出配置](/guide/backup-migration)。
+- **Go 2.0**：使用[下载选择器](/guide/download)匹配安装包，依[安装指南](/guide/install)安装；从 1.6.1 升级前先[导出配置](/guide/backup-migration)。
+- **继续使用 1.x**：保留对应版本的安装包与备份，操作见 [Python 1.x 安装指南](/legacy/1.x/install)。
 
 在 LuCI **系统 → 软件包** 更新列表并上传安装，完成后重新登录。
 
