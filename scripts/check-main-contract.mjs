@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs'
 import { resolve, join } from 'node:path'
 import { validateManifest } from './releases.mjs'
 import { parseStrictJSON } from './strict-json.mjs'
+import { checkSourceLinks } from './check-doc-links.mjs'
+import { fileURLToPath } from 'node:url'
 
 const repository = process.argv[2]
 if (!repository) throw Error('请指定主仓库 checkout 目录；缺少契约 fixture 不视为通过')
@@ -14,3 +16,6 @@ for (const entry of cases) {
   assert.equal(accepted,entry.accept,entry.name)
 }
 console.log(`M21：主仓库 Go/发布器共享契约 ${cases.length} 项通过`)
+const links = checkSourceLinks(fileURLToPath(new URL('../docs', import.meta.url)), repository)
+assert.deepEqual(links, [], links.join('\n'))
+console.log('Current-main source links checked against the supplied checkout (offline).')

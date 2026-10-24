@@ -26,13 +26,17 @@ features:
     details: 了解账号管理、定时切换、连接状态与多 WAN 认证。
     link: /guide/accounts
     linkText: 账号与网络
-  - title: 扩展学校适配
-    details: 区分认证策略与学校预设，提交实际参数和验证结果。
-    link: /development/architecture
+  - title: 排查连接问题
+    details: 从失败现象找到检查项，区分网络、认证和配置问题。
+    link: /guide/troubleshooting
+    linkText: 故障排查
+  - title: 修改代码与文档
+    details: 按任务找到源码、目录约束、验证工具和维护手册。
+    link: /development/
     linkText: 开发维护
 ---
 
-Go 2.0.0rc1 候选版已公开，可在[下载与版本选择](/guide/download)按路由器型号选包；它提供 1.6.1 配置导入和每日学校预设更新。候选版本的命令耗时、资源改进与测量边界见 [Go 性能基准](/development/benchmarks)，发布状态以 [Releases](https://github.com/matthewlu070111/smart-srun/releases) 为准。
+首次使用，从[版本与安装包选择](/guide/download)开始；已有账号，先看[备份与升级](/guide/backup-migration)。当前源码仓 `main` 为 Go 2.0，已发布功能与验证范围以[下载页](/guide/download)和 [Releases](https://github.com/matthewlu070111/smart-srun/releases) 为准；旧版说明保留在 [Python 1.x 历史资料](/legacy/1.x/)。
 
 <div class="home-preview">
   <span class="preview-label">LuCI 界面</span>

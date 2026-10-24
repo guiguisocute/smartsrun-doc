@@ -4,7 +4,7 @@
 
 校园网账号保存在 `campus_accounts`，热点保存在 `hotspot_profiles`。默认项与当前活动项分别记录；新增账号后应检查默认项。账号可独立填写认证地址、`AC_ID`、接入方式、后缀及高级登录参数。
 
-有线账号使用 `wired_iface` 指定 OpenWrt 逻辑接口或 Linux 设备，如 `wan`、`wan.v2`。读取旧配置时兼容 `network_interface`；编辑保存统一使用 `wired_iface`。
+有线账号使用 `wired_iface` 指定 OpenWrt 逻辑接口或 Linux 设备，如 `wan`、`wan.v2`。导入 1.x 备份时转换旧接口字段；Go 编辑保存使用 `wired_iface`。
 
 热点配置表示路由器要连接的个人热点，不是创建供其他设备连接的 AP。可保存多个热点，并选择默认热点用于自动切换。
 
@@ -26,8 +26,8 @@
 
 1. 先在 OpenWrt 中配置每条有线出口，使其能获得 IPv4。
 2. 为每条线路添加校园网账号，指定该线路的 `wired_iface`、认证参数及凭据。
-3. 勾选账号的 **参与并行守护**（`auth_enabled=1`）。
-4. 开启全局 **多 WAN 并行认证**（`multi_wan_enabled=1`），并启用后台自动认证。
+3. 勾选账号的 **参与并行守护**（`auth_enabled=true`）。
+4. 开启全局 **多 WAN 并行认证**（`multi_wan_enabled=true`），并启用后台自动认证。
 
 多 WAN 开启时，只维护已勾选的有线账号；勾选集合为空不会在白天自动回退为认证默认有线账号。该功能不自动创建出口、路由表或负载均衡规则。
 

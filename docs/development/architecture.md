@@ -1,91 +1,35 @@
 # 架构与认证策略扩展
 
+本页描述当前 `main` 的 Go 2.0。旧 Python `Profile`、`Runtime` 和 `school_runtime.py` 接口保留在 [1.x 架构资料](/legacy/1.x/architecture)，不能用于 Go 包。
+
 ## 源码布局
 
-本仓库是 OpenWrt 包源码。`root/` 是随包文件；`tests/`、`scripts/`、文档为开发材料，具体安装路径以 [Makefile](https://github.com/matthewlu070111/smart-srun/blob/main/Makefile) 为准。
+OpenWrt 安装内容由 [Makefile](https://github.com/matthewlu070111/smart-srun/blob/main/Makefile) 决定。`core/` 编译为设备上的 `srunnet`；`root/` 提供 LuCI、服务及静态资源；`scripts/` 和 `tests/` 是开发主机材料。
 
-| 路径 | 职责 |
-| --- | --- |
-| `root/usr/bin/srunnet` | CLI 包装入口 |
-| `root/usr/lib/smart_srun/client.py → cli.py → daemon.py` | 命令分发与守护入口 |
-| `config.py` / `defaults.json` | 配置迁移、归一化及默认值 |
-| `network.py` / `wireless.py` / `wireless_ap.py` | 网络请求、接口与 AP 管理 |
-| `portal_detect.py` / `wifi_setup.py` | 线路/认证参数探测与临时无线任务 |
-| `crypto.py` / `srun_auth.py` | SRun 编码与默认认证流程 |
-| `school_runtime.py` / `schools/` | 已安装认证策略及兼容适配器 |
-| `school_presets.py` | 公共学校参数目录加载 |
-| `logger.py` / `updater.py` | 日志与在线更新 |
-| `root/usr/lib/lua/luci/controller/smart_srun.lua` | HTTP 端点、动作及日志翻译 |
-| `root/usr/lib/lua/luci/model/cbi/smart_srun.lua` | CBI 页面及首屏 HTML |
-| `root/usr/lib/lua/luci/smart_srun/schema.lua` | Lua 共享配置契约 |
-| `root/www/luci-static/resources/smart_srun.js` | 手写 DOM / XHR 的 ES5 前端 |
-| `root/etc/init.d/smart_srun` | procd 服务 |
+按一次用户操作的流向查找源码：
 
-设备端 Python 必须保持标准库依赖，新增 import 时核对 OpenWrt 的标准库拆包。模块使用裸 import，入口负责配置 `sys.path`，不要改为包相对导入。前端无 bundler、转译器或 Node 运行时依赖。
+| 阶段 | 源码入口 | 职责 |
+| --- | --- | --- |
+| CLI 或 LuCI 发起操作 | [cli](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/cli)、[LuCI controller](https://github.com/matthewlu070111/smart-srun/blob/main/root/usr/lib/lua/luci/controller/smart_srun.lua) | 解析输入、显示结果 |
+| 本地控制协议 | [control](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/control) | Unix socket 请求与响应 |
+| 服务协调 | [daemon](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/daemon)、[application](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/application) | 配置、互斥任务、调度及状态投影 |
+| 领域与配置 | [domain](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/domain)、[config](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/config)、[policy](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/policy) | 类型、默认值、校验和决策 |
+| 认证与门户 | [auth](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/auth)、[protocol](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/protocol)、[portal](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/portal) | 协议编码、认证事务和门户解析 |
+| 设备与网络边界 | [openwrt](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/openwrt)、[transport](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/transport)、[wireless](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/wireless)、[wifi](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/wifi) | 接口绑定、设备调用及无线事务 |
+| 参数与安装 | [presets](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/presets)、[strategy](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/strategy)、[update](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/update) | 参数目录、编译期策略声明、独立更新与恢复 |
+
+`core/cmd/srunnet/main.go` 是程序入口，`root/etc/init.d/smart_srun` 由 procd 管理主服务。更新使用独立 worker；停止主服务不会取消已开始的原生安装。配置和运行态的路径区别见[配置参考](/reference/configuration)。
 
 ## 扩展选择
 
-1. 参数差异：先使用账号高级字段或学校预设。
-2. API 路径、字母表或解析细节差异：可以使用 legacy `Profile`。
-3. 完整认证、在线检测、守护钩子或私有命令差异：实现 full runtime。
+学校之间只有网关、`AC_ID`、SSID、后缀或登录参数不同，先修改预设或逐账号参数，见[预设贡献](/contribute/presets)。先检查字段契约和现有协议实现，再决定是否需要代码变化。
 
-扩展模块位于 `root/usr/lib/smart_srun/schools/`。运行时解析顺序固定为 `build_runtime(core_api, cfg)` → `Runtime(core_api, cfg)` → legacy `Profile` → 内置 default。
+Go 的认证策略由 [strategy.Strategy 与 Registry](https://github.com/matthewlu070111/smart-srun/blob/main/core/internal/strategy/strategy.go)静态声明并编译进程序，不动态加载 Python 模块。策略描述额外字段和扩展命令，不能自行绕过统一网络边界；保留命令清单以该文件的 `ReservedCommands` 为准。
 
-`SCHOOL_METADATA` 是稳定元数据契约，支持 `short_name`、`name`、`description`、`contributors`、`operators`、`doc_url`、`capabilities` 及 `school_extra` / `school_extra_descriptors`。`short_name` 对应配置键 `school`。策略文档 URL 使用 HTTP/HTTPS；学校私有字段由描述符声明，未知键会被配置归一化丢弃。
-
-legacy Profile 的最小示例：
-
-```python
-from _base import SchoolProfile
-
-
-class Profile(SchoolProfile):
-    NAME = "示例认证策略"
-    SHORT_NAME = "example"
-    DEFAULT_BASE_URL = "http://portal.example.test"
-    DEFAULT_AC_ID = "1"
-    OPERATORS = ({"suffix": "students.example.edu", "label": "学生用户"},)
-```
-
-可按需覆盖 `build_urls()`、`build_login_params()`、`parse_login_response()`、`parse_online_status()`；不要为了普通账号字段复制认证流程。默认行为以 [基类](https://github.com/matthewlu070111/smart-srun/blob/main/root/usr/lib/smart_srun/schools/_base.py) 为准。
-
-full runtime 的最小骨架：
-
-```python
-from school_runtime import RUNTIME_API_VERSION
-
-SCHOOL_METADATA = {
-    "short_name": "example-runtime",
-    "name": "示例认证策略",
-    "operators": [{"suffix": "students.example.edu", "label": "学生用户"}],
-    "capabilities": ["status", "daemon"],
-    "school_extra": [],
-}
-
-
-class Runtime(object):
-    def __init__(self, core_api, cfg):
-        self.core_api = core_api
-        self.runtime_api_version = RUNTIME_API_VERSION
-
-    def login_once(self, app_ctx):
-        return app_ctx["core_api"]["default_login_once"](app_ctx)
-
-    def query_online_status(self, app_ctx, expected_username=None, bind_ip=None):
-        return app_ctx["core_api"]["default_query_online_status"](
-            app_ctx, expected_username=expected_username, bind_ip=bind_ip
-        )
-
-    def daemon_before_tick(self, app_ctx, state, interval):
-        return None
-```
-
-CLI 钩子返回 `(handled, exit_code, message)`，守护钩子返回 `(ok, message)` 或 `None`，runtime action 返回 `(ok, message)`。不得注册同名保留命令：`status / login / logout / relogin / daemon / schools / config / switch / log / enable / disable / help / man / update / presets / detect`。完整 API 以 [school_runtime.py](https://github.com/matthewlu070111/smart-srun/blob/main/root/usr/lib/smart_srun/school_runtime.py) 及 `tests/test_school_runtime_*.py` 为准。
+账号 `operator_suffix` 决定实际登录名；空字符串是明确的不加后缀，不等于尚未选择。`school` 选择认证策略，预设 ID 仅记录参数来源；刷新预设不能覆盖用户已保存的账号参数。对字段类型和默认行为的修改应通过 `config.BuildSchema`、`config.Defaults` 与对应回归检查保持一致。
 
 ## LuCI 与任务状态契约
 
-- `action_log_tail()` 同时服务日志页与动作进度弹窗，默认 `channel=plugin` 和 `since` 语义必须兼容。
-- controller 的 `friendly_line()` / `friendly_log_text()` 供前端与 CBI 首屏复用；新增结构化事件时同步 `event_zh`。JS 颜色依赖中文等级前缀。
-- `last_action_message` / `last_action_portal_url` 属于动作终态，守护概况不得覆盖，新动作应清除旧结果；日志不输出原始认证响应。
-- 向导的后缀发现、在线身份识别、真实验证与保存相互独立。重新读取认证页不携带凭据，修改输入应清除不再有效的验证结果。
-- 无线任务的暂存、确认、回滚与账号保存需要保持一致，不得将临时状态当作已持久化配置。
+界面由 Lua controller、CBI 和 ES5 的 [smart_srun.js](https://github.com/matthewlu070111/smart-srun/blob/main/root/www/luci-static/resources/smart_srun.js) 组成，无前端 bundler 或设备端 Node 依赖。页面布局、中文文案和五步向导按源码仓 [root/AGENTS.md](https://github.com/matthewlu070111/smart-srun/blob/main/root/AGENTS.md) 的兼容约束维护。
+
+页面读取、远端刷新、真实验证与保存是不同动作。日志查询同时服务主面板和进度弹窗；修改日志格式时核对控制器的翻译与前端等级识别。动作终态不能被日常状态轮询覆盖，无线暂存连接必须能确认或回滚。完整约束在对应目录维护，不在本站复制另一套接口规范。

@@ -13,15 +13,9 @@ Issue 草稿不包含账号和密码，也不会自动提交。若使用的插�
 
 ## 维护目录
 
-主文件为 [doc/school-presets.json](https://github.com/matthewlu070111/smart-srun/blob/main/doc/school-presets.json)，随包兜底为 [school_presets_fallback.json](https://github.com/matthewlu070111/smart-srun/blob/main/root/usr/lib/smart_srun/school_presets_fallback.json)。普通 `presets list` 读取本地并合并随包数据；刷新依次尝试：
+公开目录的唯一源文件是 [doc/school-presets.json](https://github.com/matthewlu070111/smart-srun/blob/main/doc/school-presets.json)。Go 安装包直接将它安装到 `/usr/share/smart-srun/school-presets.json`，不再维护 Python 的 fallback 副本。
 
-1. `https://srun.guiguisocute.com/school-presets.json`
-2. `https://smart-srun--cloudflare-pages.pages.dev/school-presets.json`
-3. `https://raw.githubusercontent.com/matthewlu070111/smart-srun/main/doc/school-presets.json`
-4. `https://srun.edu-publish.site/school-presets.json`（旧兼容来源）
-5. 本地缓存与随包清单。
-
-无效 JSON 或不兼容 schema 也应继续尝试后续来源。不得用日期更旧的远端覆盖有效缓存，同日修正应生效。数据按学校 ID 合并，公共列表仅展示 `active` 项；`draft / deprecated` 保留在原始清单或缓存中，用户自建预设独立存储。
+`presets list` 和页面读取使用本地数据；只有显式刷新或已启用的每日调度才请求远端。远端来源、schema 验证及缓存顺序由 [presets 实现](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/presets)维护，更新行为与数据约束见 [doc/AGENTS.md](https://github.com/matthewlu070111/smart-srun/blob/main/doc/AGENTS.md)。目录可用与学校已经实测是两件事。
 
 ## 字段规则
 
@@ -29,7 +23,7 @@ Issue 草稿不包含账号和密码，也不会自动提交。若使用的插�
 - 已确认无后缀使用 `""`；只知道类型存在但真实后缀未确认可由维护者标记 `"??"`。向导不将未知值作为已知候选，账号归一化不会拼出 `user@??`。
 - 不新增 `defaults.operator`、`defaults.operator_suffix`、`no_suffix_operators`；空后缀写为 `""`。真实后缀保留大小写，`xn` 仅在旧版 `operator` 字段中作为历史占位符迁移。
 - `defaults` 记录已知 `base_url / ac_id / ssid / access_mode`。未知内容保持缺失，不为补齐格式造值。
-- `observed_login_shape` 只记录真实捕获的 `n / type / enc / info_prefix / double_stack / os / name`；账号字段对应 `login_os / login_name`。
+- `observed_login_shape` 只记录真实捕获的 `n / type / enc / info_prefix / double_stack / os / name`；Go 账号对应 `login` 对象中的同名字段（例如 `login.os / login.name`）；旧 1.x 表单字段为 `login_os / login_name`。
 - 保留 `source_issue`、贡献者及验证范围。历史可用数据可以保留原状态；失败样本与未确认场景不能因格式整理升级为已适配。
 
 合法的特殊后缀示例：
@@ -38,11 +32,10 @@ Issue 草稿不包含账号和密码，也不会自动提交。若使用的插�
 {"suffix": "students.example.edu", "label": "学生用户"}
 ```
 
-不要在示例或运行时中默认补齐三家运营商。保持主文件既有字段顺序、缩进及紧凑/展开写法；修改后同步并检查：
+不要在示例或运行时中默认补齐三家运营商。保持主文件既有字段顺序、缩进和紧凑/展开写法。修改后从插件源码仓根目录运行：
 
 ```sh
-python scripts/sync_school_presets.py --write
-python scripts/sync_school_presets.py --check
+python3 -m unittest discover -s tests -p test_preset_catalogue.py -v
 ```
 
-同步脚本按原文复制，仅替换顶层 `source`，不重排主清单。镜像站维护于 [独立 Pages 仓库](https://github.com/guiguisocute/smart_srun-_cloudflare_pages)；该镜像分发参数数据，本文档站提供使用与开发说明。
+修改加载器还需运行对应 Go 包测试，入口见源码仓 [tests/README.md](https://github.com/matthewlu070111/smart-srun/blob/main/tests/README.md)。Go 树不执行旧版 `sync_school_presets.py`。镜像站维护于[独立 Pages 仓库](https://github.com/guiguisocute/smart_srun-_cloudflare_pages)；本站的预设展示快照通过[显式同步](/development/documentation#学校目录)更新。

@@ -17,7 +17,7 @@ import DownloadSelector from '../.vitepress/theme/DownloadSelector.vue'
 | **Go 2.0.0rc1** | 候选版（预发布），2026-09-25 公开 | 愿意测试新版本，且设备架构有对应安装包 |
 | **1.6.1** | 稳定版，按目前计划是最后一个 Python 版本 | 求稳，或设备暂时没有 Go 安装包 |
 
-Go 2.0 暂无稳定版，所以选择器默认的「稳定版」通道为空。安装 2.0.0rc1 时，在第 2 步把发布通道改为**候选版**，再选择固定版本。选择器只收录带发布清单的 Go 2.0；1.6.1 请到[官方 Releases](https://github.com/matthewlu070111/smart-srun/releases) 下载，并参照 [1.x 安装指引](/guide/install)。
+Go 2.0 暂无稳定版，所以选择器默认的「稳定版」通道为空。安装 2.0.0rc1 时，在第 2 步把发布通道改为**候选版**，再选择固定版本。选择器只收录带发布清单的 Go 2.0；1.6.1 请到[官方 Releases](https://github.com/matthewlu070111/smart-srun/releases) 下载，并参照 [1.x 安装指引](/legacy/1.x/install)。
 
 Go 2.0 的核心包和 bundle 按 CPU 架构区分，只有纯 LuCI 包与架构无关。2.0.0rc1 为 OpenWrt 24.10 提供 12 种架构的 IPK，为 25.12 只提供 `aarch64_cortex-a53` 与 `x86_64` 的 APK；选定版本后，可在选择器底部展开完整列表。
 

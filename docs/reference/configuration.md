@@ -1,67 +1,62 @@
 # 配置、备份与更新
 
-1.6.1 和 Go 2.0 已加入进阶设置的配置导出、预览与导入入口，详见[配置备份与升级到 Go](/guide/backup-migration)。下文的平铺字符串配置与路径适用于 **1.x**；Go 使用 `/etc/smart-srun/config.json` 中的类型化 JSON。
+本页适用于 Go 2.0 和当前源码仓 `main`。配置为 `schema_version: 2` 的类型化 JSON；1.x 的字符串配置与旧路径见[历史参考](/legacy/1.x/configuration)。
+
+## Go 存储与字段契约
+
+| 路径 | 内容 | 是否属于用户备份 |
+| --- | --- | --- |
+| `/etc/smart-srun/config.json` | 插件配置、账号与热点，包含凭据 | 是；优先使用版本化导出 |
+| `/etc/smart-srun/user-presets.json` | 自建学校预设 | 是；单独备份 |
+| `/usr/share/smart-srun/school-presets.json` | 随包公共学校预设 | 否 |
+| `/tmp/smart-srun/presets-cache.json` | 远端预设缓存 | 否 |
+| `/tmp/smart-srun/plugin.log` | 插件日志 | 否 |
+| `/var/run/smart-srun/` | 控制 socket、状态与临时任务 | 否；重启设备会清除 |
+| `/etc/smart-srun/recovery/` | 无线或安装恢复事务 | 不作为配置恢复材料 |
+
+路径以 [daemon.Paths](https://github.com/matthewlu070111/smart-srun/blob/main/core/internal/daemon/paths.go) 为准。字段类型与默认值直接从已安装版本读取：
+
+```sh
+srunnet config schema
+srunnet config defaults
+srunnet config show
+srunnet config get checks.interval_seconds
+```
+
+`schema` 和 `defaults` 可在服务停止时读取；`show`、`get` 隐藏密码，不是完整备份。布尔值使用 `true` / `false`，数值字段使用 JSON 数字，协议参数按字段定义保持字符串。完整字段以 [config.BuildSchema](https://github.com/matthewlu070111/smart-srun/blob/main/core/internal/config/schema.go) 与 [config.Defaults](https://github.com/matthewlu070111/smart-srun/blob/main/core/internal/config/defaults.go) 为准，本站不复制一份默认值表。
+
+| 配置分组 | 用途 | 使用说明 |
+| --- | --- | --- |
+| `enabled`、`multi_wan_enabled` | 自动认证与多 WAN 总开关 | [账号与线路](/guide/accounts) |
+| `campus_accounts`、`hotspot_profiles`、`selection` | 校园账号、热点、当前与默认项 | [账号管理](/guide/accounts#校园网账号与热点配置) |
+| `quiet`、`retry`、`checks`、`failover` | 定时、重试、连通性与切网 | [状态与定时](/guide/status) |
+| `log` | 日志等级与文件记录策略 | [日志](/guide/status#日志) |
+| `preset_updates` | 每日公共预设更新时间 | [学校预设](/guide/schools) |
+| `login_defaults`、账号 `login`、`school_extra` | 协议参数及策略声明的额外字段 | [认证策略](/guide/authentication) |
+
+保存使用 `expected_revision` 防止覆盖他人的新配置。优先通过 LuCI 编辑；CLI 的交互编辑与 JSON 输入见[命令行参考](/reference/cli#配置与账号)。
 
 ## 1.x 存储与默认值
 
-| 路径 | 内容 |
-| --- | --- |
-| `/usr/lib/smart_srun/config.json` | 校园账号、热点、认证策略和插件设置；包含凭据 |
-| `/usr/lib/smart_srun/user_presets.json` | 用户自建预设与账号类型快捷项 |
-| `/usr/lib/smart_srun/defaults.json` | 随包默认值，不是用户备份 |
-| `/usr/lib/smart_srun/school_presets_cache.json` | 公共预设缓存 |
-| `/usr/lib/smart_srun/school_presets_fallback.json` | 随包公共预设 |
-| `/var/run/smart_srun/` | 状态、动作与更新、无线配置临时任务 |
-| `/var/log/smart_srun.log` | 插件日志 |
-| `/etc/config/smart_srun` | LuCI CBI 的 UCI 节点，不是完整账号配置 |
-
-持久化布尔值和数字通常使用 UCI 风格字符串，例如 `"0"`、`"1"`、`"60"`。完整默认值以 [defaults.json](https://github.com/matthewlu070111/smart-srun/blob/main/root/usr/lib/smart_srun/defaults.json) 为准，已有配置不应被随包默认值覆盖。
-
-| 配置 | 当前随包默认值 | 作用 |
-| --- | --- | --- |
-| `enabled` / `multi_wan_enabled` | `0` / `0` | 自动认证及多 WAN 总开关 |
-| `school` | `default` | 认证策略标识 |
-| `interval` / `log_level` | `60` / `INFO` | 检测间隔及日志等级 |
-| `quiet_hours_enabled` | `1` | 定时时段开关，受总开关控制 |
-| `quiet_start` / `quiet_end` | `00:00` / `06:00` | 北京时间下线时段 |
-| `force_logout_in_quiet` / `failover_enabled` | `1` / `1` | 定时强制登出及热点切换 |
-| `connectivity_check_mode` | `internet` | 在线判断依据 |
-| `backoff_enable` / `backoff_max_retries` | `1` / `4` | 登录失败退避及最大重试次数；次数 `0` 表示无限 |
-| `retry_cooldown_seconds` / `retry_max_cooldown_seconds` | `10` / `60` | 重试等待范围 |
-| `switch_ready_timeout_seconds` | `30` | 切网等待时间 |
-| `manual_terminal_check_max_attempts` / `manual_terminal_check_interval_seconds` | `5` / `2` | 手动动作终态检查 |
-| `hotspot_failback_enabled` | `1` | 热点切换失败时回退 |
-
-账号高级登录字段为 `n`、`type`、`enc`、`info_prefix`、`double_stack`、`login_os`、`login_name`。账号值优先；`n/type/enc` 再兼容旧全局配置，其余缺省字段使用内置默认。不要将某账号解析后的值作为另一账号的默认值。
-
-`_legacy_login_shape` 和 `_multi_wan_strict_bind` 只用于运行态，不可持久化。`school_extra` 由认证策略的字段描述符归一化，未知键会被丢弃。
+旧锚点继续指向版本明确的入口：[1.x 存储与默认值](/legacy/1.x/configuration#_1-x-存储与默认值)。旧 `config.json` 不能直接放到 Go 配置路径；使用[显式版本转换](/guide/backup-migration#从-1-6-1-转到-go)。
 
 ## 保留配置刷机与手动备份
 
-当前包中的 [keep.d 规则](https://github.com/matthewlu070111/smart-srun/blob/main/root/lib/upgrade/keep.d/smart-srun) 包含：
+推荐先在进阶设置[导出版本化备份](/guide/backup-migration)，自建预设单独保存。备份包含密码，不要提交到 Issue 或公开仓库。
+
+Go 的 [keep.d 规则](https://github.com/matthewlu070111/smart-srun/blob/main/root/lib/upgrade/keep.d/smart-srun)只追加以下用户文件：
 
 ```text
-/usr/lib/smart_srun/config.json
-/usr/lib/smart_srun/user_presets.json
+/etc/smart-srun/config.json
+/etc/smart-srun/user-presets.json
 ```
 
-在刷机前更新插件并检查本机实际清单；尚未创建的用户预设文件可能不会出现在输出中：
+保留配置刷机前用 `sysupgrade -l` 检查本机实际清单；不存在的预设文件可能不出现在输出中。新固件没有插件时仍需安装匹配的包。清空配置、恢复出厂或重写磁盘不能依赖保留规则，提前下载备份。
 
-```sh
-sysupgrade -l | grep -E '^/usr/lib/smart_srun/(config|user_presets)\.json$'
-```
-
-然后在 **系统 → 备份/升级** 下载备份，升级时选择保留配置。新固件没有插件时仍需重新安装程序；程序会读取恢复的 JSON 文件。公共预设缓存、程序、默认值和临时运行状态不属于本插件追加的备份项。参见 [OpenWrt 备份与恢复](https://openwrt.org/docs/guide-user/troubleshooting/backup_restore)。
-
-清空配置刷机、恢复出厂或重写磁盘镜像不能依赖保留规则。应提前将上述两份文件下载到电脑；不存在的 `user_presets.json` 可以跳过。重装后将主配置上传为 `/tmp/smart-srun-config.json`，导入并重启：
-
-```sh
-srunnet config set -f /tmp/smart-srun-config.json
-/etc/init.d/smart_srun restart
-```
-
-用户预设需单独恢复到 `/usr/lib/smart_srun/user_presets.json`，不是通过 `config set -f` 导入。保留原文件内容、限制文件权限，刷新 LuCI 后查看。备份含账号与密码；路由器 `/tmp` 中的副本重启后会丢失。
+配置导入、跨版本转换与预览确认统一见[备份与升级](/guide/backup-migration)，不要使用 1.x 的 `config set -f` 命令覆盖 Go 配置。
 
 ## 更新包来源与校验
 
-在线更新保留当前 bundle / split 包型。bundle 来自 Release 资产；分体压缩包从 `downloads` 分支获取。更新器会使用可用的 SHA-256 信息校验下载；历史资产可能没有摘要或旁注，不能把兼容回退描述为所有旧包都经过签名或摘要验证。
+Go 内置更新读取发布清单，按实际架构、固件系列与现有包型匹配安装包，下载摘要及原生验证必须通过。APK 内置更新和恢复需要设备已有受信公钥；手动安装时跳过签名不会自动安装公钥。
+
+普通更新见[命令行在线更新](/reference/cli#在线更新)；开发设备上传、精确版本恢复与发布证据见[验证与部署入口](/development/validation)。配置备份与安装恢复包分别保留。
