@@ -1,7 +1,830 @@
 {
   "schema_version": 1,
-  "refreshed_at": "2026-09-25T06:32:51.219Z",
+  "refreshed_at": "2026-10-31T13:00:47.425Z",
   "releases": [
+    {
+      "manifest": {
+        "schema_version": 1,
+        "release": "2.0.1",
+        "channel": "stable",
+        "source_commit": "9362b93223c9f6fc5871e943c5196279bdb530ca",
+        "assets": [
+          {
+            "id": "core-apk-aarch64_cortex-a53-25.12",
+            "kind": "core",
+            "package_manager": "apk",
+            "format": "apk",
+            "openwrt_arch": "aarch64_cortex-a53",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "25.12.2",
+            "target": "mediatek/filogic",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun-2.0.1-r1_aarch64_cortex-a53_openwrt-25.12.2.apk",
+            "sha256": "aa5eca4f85bf813a5c2c3957b9059c7e17c01b9dec2e4b93cfb4d25bae6de3cd",
+            "bytes": 3871670,
+            "installed_bytes": 9448721,
+            "firmware_compat": [
+              "25.12"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "luci-apk-noarch-25.12",
+            "kind": "luci",
+            "package_manager": "apk",
+            "format": "apk",
+            "openwrt_arch": "noarch",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "25.12.2",
+            "target": "mediatek/filogic",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-2.0.1-r1_noarch_openwrt-25.12.2.apk",
+            "sha256": "e55609e3f30dbfbc989372bfec744d651acb3948fc49e8f4dc511d9eb8c5d7ac",
+            "bytes": 79823,
+            "installed_bytes": 302295,
+            "firmware_compat": [
+              "25.12"
+            ],
+            "validation": {
+              "build": true,
+              "elf": false,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-apk-aarch64_cortex-a53-25.12",
+            "kind": "bundle",
+            "package_manager": "apk",
+            "format": "apk",
+            "openwrt_arch": "aarch64_cortex-a53",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "25.12.2",
+            "target": "mediatek/filogic",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle-2.0.1-r1_aarch64_cortex-a53_openwrt-25.12.2.apk",
+            "sha256": "028e949e31a89f5f0961407d14bc6c518f976a87e4d448846da07de0a9b8e0a6",
+            "bytes": 3951186,
+            "installed_bytes": 9751063,
+            "firmware_compat": [
+              "25.12"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-aarch64_cortex-a53-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "aarch64_cortex-a53",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "mediatek/filogic",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_aarch64_cortex-a53_openwrt-24.10.8.ipk",
+            "sha256": "e790247b18f4ecb6c7688c8323ac94a373cb02045d7154ff75b49c2e0adf34d1",
+            "bytes": 3887320,
+            "installed_bytes": 9448469,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "luci-opkg-all-24.10",
+            "kind": "luci",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "all",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "mediatek/filogic",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun_2.0.1-r1_all_openwrt-24.10.8.ipk",
+            "sha256": "58c752c4b27589d6f0ca2738883b505ecaef9e118750d4b7bc6b75a3ac0e8fef",
+            "bytes": 80416,
+            "installed_bytes": 302050,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": false,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-aarch64_cortex-a53-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "aarch64_cortex-a53",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "mediatek/filogic",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_aarch64_cortex-a53_openwrt-24.10.8.ipk",
+            "sha256": "1ee920106e14c705594ef890111d924dfbe55c38b4f27ba75973b9e5124da646",
+            "bytes": 3967122,
+            "installed_bytes": 9750519,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-aarch64_cortex-a72-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "aarch64_cortex-a72",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "bcm27xx/bcm2711",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_aarch64_cortex-a72_openwrt-24.10.8.ipk",
+            "sha256": "c3aa0320e9b70b0340ffe00d62ca6d420a68b809707bf1f40669dff95d70c31b",
+            "bytes": 3887319,
+            "installed_bytes": 9448469,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-aarch64_cortex-a72-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "aarch64_cortex-a72",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "bcm27xx/bcm2711",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_aarch64_cortex-a72_openwrt-24.10.8.ipk",
+            "sha256": "cd5fee05deaba64e5092243a9728db0d46c80a42ffb34b313e503da120738846",
+            "bytes": 3967121,
+            "installed_bytes": 9750519,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-aarch64_cortex-a76-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "aarch64_cortex-a76",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "bcm27xx/bcm2712",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_aarch64_cortex-a76_openwrt-24.10.8.ipk",
+            "sha256": "f80a47b1a93ba7785d6c914c3a0f2456613aea244f557523b89381925d59ad0b",
+            "bytes": 3887321,
+            "installed_bytes": 9448469,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-aarch64_cortex-a76-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "aarch64_cortex-a76",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "bcm27xx/bcm2712",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_aarch64_cortex-a76_openwrt-24.10.8.ipk",
+            "sha256": "5d7550bea4241ff4365d6d2c39df0ad8e2f2e9b9973f64416f9a968fdd87780d",
+            "bytes": 3967122,
+            "installed_bytes": 9750519,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-aarch64_generic-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "aarch64_generic",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "armsr/armv8",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_aarch64_generic_openwrt-24.10.8.ipk",
+            "sha256": "5d2645c342b281772df5921c828c723060bfecfabb3f21721243fa19b53e2f37",
+            "bytes": 3887312,
+            "installed_bytes": 9448469,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-aarch64_generic-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "aarch64_generic",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "armsr/armv8",
+            "goos": "linux",
+            "goarch": "arm64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_aarch64_generic_openwrt-24.10.8.ipk",
+            "sha256": "32900e85fb51cd7f74fc224639fe08a5374da0dfff0691d0f6766d5a50e53f28",
+            "bytes": 3967120,
+            "installed_bytes": 9750519,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-arm_cortex-a15_neon-vfpv4-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "arm_cortex-a15_neon-vfpv4",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "ipq806x/generic",
+            "goos": "linux",
+            "goarch": "arm",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_arm_cortex-a15_neon-vfpv4_openwrt-24.10.8.ipk",
+            "sha256": "adc76da931fea731df83a3709d8c4215dfe64c96bafc664827dfb93cf34ce850",
+            "bytes": 4122805,
+            "installed_bytes": 9858769,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-arm_cortex-a15_neon-vfpv4-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "arm_cortex-a15_neon-vfpv4",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "ipq806x/generic",
+            "goos": "linux",
+            "goarch": "arm",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_arm_cortex-a15_neon-vfpv4_openwrt-24.10.8.ipk",
+            "sha256": "ae553ad4931b3e68a2a41b9134ddfeb8f4ce690b4d81731ec0829dfe77bb8abb",
+            "bytes": 4202714,
+            "installed_bytes": 10160819,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-arm_cortex-a7_neon-vfpv4-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "arm_cortex-a7_neon-vfpv4",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "ipq40xx/generic",
+            "goos": "linux",
+            "goarch": "arm",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_arm_cortex-a7_neon-vfpv4_openwrt-24.10.8.ipk",
+            "sha256": "9f8bff3fc494d970624fcbd9f5ceb2615e8b643535157601bf90e03983922faf",
+            "bytes": 4122802,
+            "installed_bytes": 9858769,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-arm_cortex-a7_neon-vfpv4-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "arm_cortex-a7_neon-vfpv4",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "ipq40xx/generic",
+            "goos": "linux",
+            "goarch": "arm",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_arm_cortex-a7_neon-vfpv4_openwrt-24.10.8.ipk",
+            "sha256": "215c59de52e3bdb88543e06c69318a6bad0dbb843dfa80572aacbb5009eade09",
+            "bytes": 4202709,
+            "installed_bytes": 10160819,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-arm_cortex-a9_vfpv3-d16-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "arm_cortex-a9_vfpv3-d16",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "mvebu/cortexa9",
+            "goos": "linux",
+            "goarch": "arm",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_arm_cortex-a9_vfpv3-d16_openwrt-24.10.8.ipk",
+            "sha256": "0ad2c6940405354abe7f475380d885e206ee78054bb0ff041522d6d729abc363",
+            "bytes": 4122805,
+            "installed_bytes": 9858769,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-arm_cortex-a9_vfpv3-d16-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "arm_cortex-a9_vfpv3-d16",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "mvebu/cortexa9",
+            "goos": "linux",
+            "goarch": "arm",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_arm_cortex-a9_vfpv3-d16_openwrt-24.10.8.ipk",
+            "sha256": "25aa64b75bb2d60f18933a162fe44b297493dbf53f6ab38f48cb2b929e475b42",
+            "bytes": 4202713,
+            "installed_bytes": 10160819,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-mips_24kc-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "mips_24kc",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "ath79/generic",
+            "goos": "linux",
+            "goarch": "mips",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_mips_24kc_openwrt-24.10.8.ipk",
+            "sha256": "4b5eefc183dbd32fbc5bf2aabc0ce8b6b32afafc1250f26bddf86d7fe049973c",
+            "bytes": 3472715,
+            "installed_bytes": 10126961,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-mips_24kc-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "mips_24kc",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "ath79/generic",
+            "goos": "linux",
+            "goarch": "mips",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_mips_24kc_openwrt-24.10.8.ipk",
+            "sha256": "dba2b7bd4b7e9eec3199abd9491e74f8962b3f60aa53cf2f81655b4f382ecd03",
+            "bytes": 3552751,
+            "installed_bytes": 10429011,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-mipsel_24kc-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "mipsel_24kc",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "ramips/mt7621",
+            "goos": "linux",
+            "goarch": "mipsle",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_mipsel_24kc_openwrt-24.10.8.ipk",
+            "sha256": "0763975c5d7f46b02b7caa9e2269e75e7f8b066f4ed0d0a7049ad70cbb5d94cb",
+            "bytes": 3398569,
+            "installed_bytes": 10126961,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-mipsel_24kc-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "mipsel_24kc",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "ramips/mt7621",
+            "goos": "linux",
+            "goarch": "mipsle",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_mipsel_24kc_openwrt-24.10.8.ipk",
+            "sha256": "9a98106920c663b2e9070f2eec68bb05d2c23b119d489989eb773a06e208d419",
+            "bytes": 3478205,
+            "installed_bytes": 10429011,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-mipsel_24kc_24kf-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "mipsel_24kc_24kf",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "pistachio/generic",
+            "goos": "linux",
+            "goarch": "mipsle",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_mipsel_24kc_24kf_openwrt-24.10.8.ipk",
+            "sha256": "6c17d6adc349feec51002678b3b8c53b6359eb474805f96e05b2bb0e16efbd19",
+            "bytes": 3398570,
+            "installed_bytes": 10126961,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-mipsel_24kc_24kf-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "mipsel_24kc_24kf",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "pistachio/generic",
+            "goos": "linux",
+            "goarch": "mipsle",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_mipsel_24kc_24kf_openwrt-24.10.8.ipk",
+            "sha256": "8af3dc79b412913d851a207d2f634b6492b08f34e84d4992e60825500e450928",
+            "bytes": 3478210,
+            "installed_bytes": 10429011,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-mipsel_74kc-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "mipsel_74kc",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "bcm47xx/mips74k",
+            "goos": "linux",
+            "goarch": "mipsle",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_mipsel_74kc_openwrt-24.10.8.ipk",
+            "sha256": "04d5b42dac8c716385393444640f8c120bc00faa67ae6bf0c11e626986f81de5",
+            "bytes": 3398569,
+            "installed_bytes": 10126961,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-mipsel_74kc-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "mipsel_74kc",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "bcm47xx/mips74k",
+            "goos": "linux",
+            "goarch": "mipsle",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_mipsel_74kc_openwrt-24.10.8.ipk",
+            "sha256": "dd3c8c6ddc576595ff9649ae4cf5c37722fc3cfef0daa9eeefaf7460ae7e959a",
+            "bytes": 3478206,
+            "installed_bytes": 10429011,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-apk-x86_64-25.12",
+            "kind": "core",
+            "package_manager": "apk",
+            "format": "apk",
+            "openwrt_arch": "x86_64",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "25.12.2",
+            "target": "x86/64",
+            "goos": "linux",
+            "goarch": "amd64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun-2.0.1-r1_x86_64_openwrt-25.12.2.apk",
+            "sha256": "e3cd7528f72a41e23425d5e78d4235a877b18377919ab0c640e68350c7274950",
+            "bytes": 4128198,
+            "installed_bytes": 10026161,
+            "firmware_compat": [
+              "25.12"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-apk-x86_64-25.12",
+            "kind": "bundle",
+            "package_manager": "apk",
+            "format": "apk",
+            "openwrt_arch": "x86_64",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "25.12.2",
+            "target": "x86/64",
+            "goos": "linux",
+            "goarch": "amd64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle-2.0.1-r1_x86_64_openwrt-25.12.2.apk",
+            "sha256": "9bdc66e027d507923050b372e00dc7044b1bb63cb16542980a0588ae08321922",
+            "bytes": 4207584,
+            "installed_bytes": 10328503,
+            "firmware_compat": [
+              "25.12"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "core-opkg-x86_64-24.10",
+            "kind": "core",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "x86_64",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "x86/64",
+            "goos": "linux",
+            "goarch": "amd64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/smart-srun_2.0.1-r1_x86_64_openwrt-24.10.8.ipk",
+            "sha256": "e3492e1acdf72d85f084901fa1c98433b29516929803b1edc73e8eba04714c33",
+            "bytes": 4155966,
+            "installed_bytes": 10025909,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          },
+          {
+            "id": "bundle-opkg-x86_64-24.10",
+            "kind": "bundle",
+            "package_manager": "opkg",
+            "format": "ipk",
+            "openwrt_arch": "x86_64",
+            "package_version": "2.0.1-r1",
+            "sdk_release": "24.10.8",
+            "target": "x86/64",
+            "goos": "linux",
+            "goarch": "amd64",
+            "url": "https://github.com/matthewlu070111/smart-srun/releases/download/2.0.1/luci-app-smart-srun-bundle_2.0.1-r1_x86_64_openwrt-24.10.8.ipk",
+            "sha256": "4dd7ea5ddb4d4aea9d669c77d3af8fb0676742da2fc8505ca5772a338d6e1c71",
+            "bytes": 4235782,
+            "installed_bytes": 10327959,
+            "firmware_compat": [
+              "24.10"
+            ],
+            "validation": {
+              "build": true,
+              "elf": true,
+              "emulated_core": false,
+              "openwrt_install": false,
+              "hardware_core": false,
+              "campus_auth": false
+            }
+          }
+        ]
+      },
+      "manifest_sha256": "b19a68fec597f0f2aa933b89e1083277f9db60455b04bd083c5dd589f270c119",
+      "canonical_sha256": "03f705de84a59e3d1a824d5a8d20aa3b86ac295c50dcfe802a1e1bf4e50a7825",
+      "verified_public_at": "2026-10-31T13:00:47.423Z"
+    },
     {
       "manifest": {
         "schema_version": 1,

@@ -18,7 +18,7 @@ srunnet log runtime
 
 无参数等同 `status`。`login / logout / relogin` 可追加账号 ID；省略时使用当前校园账号。认证和切网会执行真实操作，默认等待动作结束；支持的异步选项见本机帮助。
 
-`enable / disable` 保存自动认证开关，和 procd 的开机启动设置不同。状态及配置读取不会自动启动服务，需要时显式运行 `srunnet service ensure-running`。手动登出暂停该账号的自动认证，语义见[认证说明](/guide/authentication#go-2-0-开发版的手动登出与热点切换)。
+`enable / disable` 保存自动认证开关，和 procd 的开机启动设置不同。状态及配置读取不会自动启动服务，需要时显式运行 `srunnet service ensure-running`。手动登出暂停该账号的自动认证，语义见[认证说明](/guide/authentication#手动登出与热点切换)。
 
 ## 配置与账号
 

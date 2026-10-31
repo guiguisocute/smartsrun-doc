@@ -6,7 +6,7 @@
 
 先在[下载与版本选择](/guide/download#先选版本)核对发布状态与适用范围，再按路由器实际架构、固件和包管理器选包。
 
-- **Go 2.0**：使用[下载选择器](/guide/download)匹配安装包，依[安装指南](/guide/install)安装；从 1.6.1 升级前先[导出配置](/guide/backup-migration)。
+- **Go 2.x 正式版**：使用[下载选择器](/guide/download)的稳定版通道匹配安装包，依[安装指南](/guide/install)安装；从 1.6.1 升级前先[导出配置](/guide/backup-migration)，再手动安装，不使用 1.x 一键更新跨版本升级。
 - **继续使用 1.x**：保留对应版本的安装包与备份，操作见 [Python 1.x 安装指南](/legacy/1.x/install)。
 
 在 LuCI **系统 → 软件包** 更新列表并上传安装，完成后重新登录。
@@ -21,7 +21,7 @@
 
 ![智慧深澜界面，使用示例网络与账号](/images/smart-srun-overview.png)
 
-当前文档对应仓库开发版本；已安装版本的功能以发布说明和实际界面为准。五步向导详解见 [一键配置](/guide/setup-wizard)。
+本指南面向 Go 发布版；具体版本的功能与验证范围见[下载页](/guide/download#先选版本)和对应发布说明。五步向导详解见 [一键配置](/guide/setup-wizard)。
 
 ## 后续设置
 

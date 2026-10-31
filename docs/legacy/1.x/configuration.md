@@ -68,4 +68,4 @@ srunnet config set -f /tmp/smart-srun-config.json
 
 ## 更新包来源与校验
 
-在线更新保留当前 bundle / split 包型。bundle 来自 Release 资产；分体压缩包从 `downloads` 分支获取。更新器会使用可用的 SHA-256 信息校验下载；历史资产可能没有摘要或旁注，不能把兼容回退描述为所有旧包都经过签名或摘要验证。
+1.x 在线更新保留当前 bundle / split 包型。bundle 来自 Release 资产；分体压缩包从 `downloads` 分支获取。更新器会使用可用的 SHA-256 信息校验下载；历史资产可能没有摘要或旁注，不能把兼容回退描述为所有旧包都经过签名或摘要验证。当前最新正式发布已是 Go，旧更新器不支持 Go 包的架构选择；跨版本升级请使用[导出备份后手动安装](/guide/backup-migration#从-1-6-1-转到-go)流程。

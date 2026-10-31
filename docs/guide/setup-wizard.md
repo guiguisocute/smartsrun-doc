@@ -30,7 +30,7 @@
 - 新建连接成功后需在 15 分钟内保存账号。取消、超时或连接失败会尝试恢复原网络；检测到并发修改时不会覆盖他人的新配置，而会提示检查恢复结果。
 - 保存临时无线连接对应的账号后，该账号会设为默认并启用自动认证。复用已有连接或普通新增账号时，按保存结果在账号列表中设置默认账号和启用状态。
 
-完整状态与限制以当前版本的 `wifi_setup.py` 为准。有线向导使用现有接口，不创建 VLAN、PPPoE 或路由策略。
+Go 向导状态由 [daemon/wizard.go](https://github.com/matthewlu070111/smart-srun/blob/main/core/internal/daemon/wizard.go) 和 [wireless 事务](https://github.com/matthewlu070111/smart-srun/tree/main/core/internal/wireless)实现，旧 `wifi_setup.py` 仅适用于 Python 1.x。有线向导使用现有接口，不创建 VLAN、PPPoE 或路由策略。
 
 
 ## 保存后贡献预设

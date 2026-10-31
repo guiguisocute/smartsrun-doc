@@ -2,9 +2,11 @@
 
 此页帮助选择验证层级；可以执行的完整 SDK、签名与部署步骤维护在源码仓，随实现一起更新。当前 `main` 为 Go，Python 1.x 的操作另见页面末尾的历史入口。
 
-## Go 2.0 开发分支
+<span id="go-2-0-开发分支"></span>
 
-这一旧锚点继续保留；Go 已是当前 `main` 的实现。修改核心时先运行相关回归，完整主机门禁为 `bash scripts/verify-go.sh`；它执行格式、vet、乱序测试、覆盖率与竞态检查。主机工具和 LuCI 检查从源码仓 [tests/README.md](https://github.com/matthewlu070111/smart-srun/blob/main/tests/README.md)选择。
+## Go 核心验证
+
+Go 已是当前 `main` 的实现，并有正式发布；源码主线与已发布包分别核对。修改核心时先运行相关回归，完整主机门禁为 `bash scripts/verify-go.sh`；它执行格式、vet、乱序测试、覆盖率与竞态检查。主机工具和 LuCI 检查从源码仓 [tests/README.md](https://github.com/matthewlu070111/smart-srun/blob/main/tests/README.md)选择。
 
 | 已执行的检查 | 能说明什么 | 不能据此声称 |
 | --- | --- | --- |

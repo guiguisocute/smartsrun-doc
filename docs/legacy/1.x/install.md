@@ -24,7 +24,9 @@
 
 运行时依赖 `python3-light`、`python3-urllib`、`python3-codecs`、`python3-openssl`。bundle 与两个分体包互斥；在二者之间切换前，先备份并移除原包型。
 
-从 [Releases](https://github.com/matthewlu070111/smart-srun/releases) 下载安装包。以设备实际包管理器为准：`opkg` 使用 `.ipk`，`apk` 使用 `.apk`，不要仅根据第三方固件的版本名称判断。相关命令见 [OpenWrt 包管理说明](https://openwrt.org/docs/guide-user/additional-software/managing_packages)。
+从 [Python 1.6.1 固定发布页](https://github.com/matthewlu070111/smart-srun/releases/tag/v1.6.1)下载安装包，不要将最新 Go 发布中的文件用于本页命令。以设备实际包管理器为准：`opkg` 使用 `.ipk`，`apk` 使用 `.apk`，不要仅根据第三方固件的版本名称判断。相关命令见 [OpenWrt 包管理说明](https://openwrt.org/docs/guide-user/additional-software/managing_packages)。
+
+从 1.x 转到 Go 时，不使用旧版内置一键更新；先导出 1.6.1 备份，再按设备架构手动安装，详见[备份与升级](/guide/backup-migration#从-1-6-1-转到-go)。
 
 ## 安装方式
 
