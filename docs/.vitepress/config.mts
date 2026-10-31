@@ -103,6 +103,6 @@ export default defineConfig({
     lastUpdated: { text: '最后更新' },
     darkModeSwitchLabel: '外观', lightModeSwitchTitle: '切换到浅色模式', darkModeSwitchTitle: '切换到深色模式',
     sidebarMenuLabel: '目录', returnToTopLabel: '返回顶部',
-    footer: { message: '当前源码为 Go 2.0；已发布功能以版本说明为准，1.x 资料独立归档。', copyright: '智慧深澜 · 社区维护 · WTFPL' }
+    footer: { message: 'Go 2.x 已正式发布；最新版本与验证范围见下载页，Python 1.x 资料独立归档。', copyright: '智慧深澜 · 社区维护 · WTFPL' }
   }
 })

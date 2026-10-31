@@ -36,7 +36,7 @@ features:
     linkText: 开发维护
 ---
 
-首次使用，从[版本与安装包选择](/guide/download)开始；已有账号，先看[备份与升级](/guide/backup-migration)。当前源码仓 `main` 为 Go 2.0，已发布功能与验证范围以[下载页](/guide/download)和 [Releases](https://github.com/matthewlu070111/smart-srun/releases) 为准；旧版说明保留在 [Python 1.x 历史资料](/legacy/1.x/)。
+首次使用，从[版本与安装包选择](/guide/download)开始；已有账号，先看[备份与升级](/guide/backup-migration)。Go 2.x 已有正式发布，可在下载页选择稳定版通道；最新版本、安装包与验证范围统一见[下载页](/guide/download#先选版本)和 [Releases](https://github.com/matthewlu070111/smart-srun/releases)。旧版说明保留在 [Python 1.x 历史资料](/legacy/1.x/)，从 1.x 升级须先导出备份，再手动安装匹配架构的 Go 包。
 
 <div class="home-preview">
   <span class="preview-label">LuCI 界面</span>

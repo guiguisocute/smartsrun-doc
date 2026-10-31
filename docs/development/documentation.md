@@ -58,10 +58,14 @@ node scripts/sync-presets.mjs /path/to/smart-srun <完整提交SHA>
 `/guide/download` 消费 `data/release-catalogue.json`，只收录已公开并通过资产核对的不可变版本。维护者将下面的版本替换为需要导入的完整发布标签：
 
 ```sh
-node scripts/sync-releases.mjs 2.0.0rc1
+node scripts/sync-releases.mjs 2.0.1
 ```
 
 脚本核对 Release 状态、清单摘要、真实资产与 `SHA256SUMS`，全部通过才替换快照；网络或校验错误保留原文件。已有版本摘要不可修改，新增版本保留旧版本。导入本地实验包不属于该流程。
+
+同步新正式版时，同时核对[下载页](/guide/download#先选版本)的版本、发布日期、架构范围和已知问题，并更新受影响的安装、迁移与故障排查说明。最新版本号集中在下载页，其余入口引用该页；不能仅修改文案而遗漏选择器的数据快照。预览时检查默认稳定版通道能选到新版本，并至少匹配一组 IPK 和 APK 下载文件。
+
+学校目录独立于软件包发布更新；维护时也要核对其固定提交来源。历史基准和实验保留原日期、版本及验证范围，不把旧测量结果改标为新版本验收。
 
 修改发布清单消费者时，在本站运行跨仓契约检查；源码仓对应门禁为 `cd core && go test ./internal/update -run TestManifestV1ConsumerContract`。
 

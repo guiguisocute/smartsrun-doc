@@ -61,8 +61,8 @@ test('invalid refresh retains valid snapshot; corrupted cache fails build', () =
 
 test('checked-in source is complete and all missing evidence stays unverified', () => {
   const snapshot = loadSchools(new URL('../data/', import.meta.url))
-  assert.equal(snapshot.schools.length, 12)
-  assert.equal(filterSchools(snapshot.schools).length, 9)
-  assert.equal(snapshot.schools.filter(item => item.status === 'draft').length, 3)
+  assert.equal(snapshot.schools.length, 16)
+  assert.equal(filterSchools(snapshot.schools).length, 15)
+  assert.equal(snapshot.schools.filter(item => item.status === 'draft').length, 1)
   assert.ok(snapshot.schools.every(item => !item.evidence.length))
 })

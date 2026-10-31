@@ -43,7 +43,7 @@ function chooseFirmware() {
   manager.value = ''; firmware.value = ''; architectures.value = ''; pasted.value = ''; notice.value = ''
 }
 const result = computed(() => {
-  if (onlyCandidates.value) return { type: 'NeedMoreInfo', message: 'Go 2.0 暂无稳定版。请在第 2 步改选「候选版」，或继续使用 1.6.1 稳定版。' }
+  if (onlyCandidates.value) return { type: 'NeedMoreInfo', message: '当前快照只收录了候选版。请先核对官方 Releases；需要历史候选包时，在第 2 步改选「候选版」。' }
   if (!manifest.value) return { type: 'NeedMoreInfo', message: releases.value.length ? '请选择固定发布版本。' : '当前快照没有收录此通道的 Go 2.0 安装包。' }
   if (!useActual.value && !selectedSource.value) return { type:'NeedMoreInfo', message:'请选择路由器型号和当前固件。' }
   return selectAssets(manifest.value, facts.value, mode.value)
@@ -118,8 +118,8 @@ command -v apk &amp;&amp; apk --print-arch</code></pre>
       <legend>2. 选择发布版本</legend>
       <label for="release-channel">发布通道</label>
       <select id="release-channel" v-model="channel"><option value="stable">稳定版</option><option value="rc">候选版（RC，含正式版）</option></select>
-      <p v-if="onlyCandidates" class="channel-hint">Go 2.0 暂无稳定版，目前公开的是候选版 {{ candidates[0].release }}。<button type="button" @click="useCandidate">改用候选版 {{ candidates[0].release }}</button> 需要稳定版请按 <a href="/guide/install">1.x 安装指引</a> 安装 1.6.1。</p>
-      <p v-if="channel === 'rc'">候选版是预发布版本，适合愿意测试新版本的用户。Go 2.0 不会自动读取 1.x 配置：升级前在 1.6.1 导出备份，安装后<a href="/guide/backup-migration">显式导入</a>，或重新填写账号。</p>
+      <p v-if="onlyCandidates" class="channel-hint">当前快照只收录了候选版，请到 <a :href="`https://github.com/${REPOSITORY}/releases`">官方 Releases</a> 核对正式发布。<button type="button" @click="useCandidate">改用已收录的候选版 {{ candidates[0].release }}</button> 旧版用户可查阅 <a href="/legacy/1.x/install">1.x 安装指引</a>。</p>
+      <p v-if="channel === 'rc'">此通道同时列出候选版和正式版；标注「预发布」的候选版适合愿意测试的用户。Go 不会自动读取 1.x 配置：升级前在 1.6.1 导出备份，手动安装匹配架构的 Go 包后<a href="/guide/backup-migration">显式导入</a>，或重新填写账号。</p>
       <label for="release-version">固定版本</label>
       <select id="release-version" v-model="version"><option value="">{{ releases.length ? '请选择版本' : '此通道暂无已收录版本' }}</option><option v-for="release in releases" :key="release.release" :value="release.release">{{ release.release }}</option></select>
       <p v-if="manifest"><a :href="`https://github.com/${REPOSITORY}/releases/tag/${manifest.release}`">{{ manifest.release }} 发布说明</a>{{ manifest.channel === 'rc' ? '（预发布）' : '' }}：包含变更、升级步骤和已知限制。</p>

@@ -78,4 +78,4 @@ srunnet update run
 srunnet update status
 ```
 
-`update check` 查询最新正式发布；`run` 下载并安装与现有包型及包管理器匹配的更新，`run --background` 启动后台任务。安装前备份配置，更新状态以 `update status` 或 LuCI 提示为准。
+`update check` 查询最新正式发布；`run` 下载并安装与现有包型及包管理器匹配的更新，`run --background` 启动后台任务。这是 1.x 更新器的历史行为：它不能选择 Go 包的 CPU 架构，**不要用这些命令跨版本升级到 Go**。先导出 1.6.1 备份，再按[迁移指南](/guide/backup-migration#从-1-6-1-转到-go)手动安装。
